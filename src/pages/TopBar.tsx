@@ -1,4 +1,4 @@
-import { HomeOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
+import { FieldTimeOutlined, FileTextOutlined, HomeOutlined, InteractionOutlined, SettingOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Menu } from "antd";
 import { Header } from "antd/es/layout/layout";
 import { Link } from "react-router-dom";
@@ -19,13 +19,19 @@ const TopBar = () => {
                 <Link to="/">Home</Link>
               </Menu.Item>
               <Menu.Item key="2" icon={<UserOutlined />}>
-                <Link to="/profile">l'employé</Link>
+                <Link to="/personnel">Gestion du personnel</Link>
               </Menu.Item>
-              <Menu.Item key="3" icon={<UserOutlined />}>
-                <Link to="/documents">Documents</Link>
+              <Menu.Item key="3" icon={<InteractionOutlined />}>
+                <Link to="/activite">Gestion d'activité</Link>
               </Menu.Item>
-              <Menu.Item key="4" icon={<SettingOutlined />}>
-                <Link to="/settings">Settings</Link>
+              <Menu.Item key="4" icon={<FileTextOutlined />}>
+                <Link to="/documents">Gestion des Documents</Link>
+              </Menu.Item>
+              <Menu.Item key="5" icon={<FieldTimeOutlined />}>
+                <Link to="/Conge">Gestion de Temps</Link>
+              </Menu.Item>
+              <Menu.Item key="6" icon={<SettingOutlined />}>
+                <Link to="/Parammetre">Parammetre</Link>
               </Menu.Item>
             </Menu>
           </Header>

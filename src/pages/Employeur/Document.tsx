@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Table, Button, Form, Col, Tabs, Avatar, Upload, Input, Row, Select } from "antd";
-import { AppstoreAddOutlined, DeleteOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { Table, Button, Form, Col, Tabs, Upload, Input, Row, Select } from "antd";
+import { AppstoreAddOutlined, DeleteOutlined, UploadOutlined,  } from "@ant-design/icons";
 import TabPane from "antd/es/tabs/TabPane";
 import Title from "antd/es/typography/Title";
 import Editique from "./Editique";
+import GestionCV from "./GestionDeCV";
 
 interface Enfant {
   key: string;
@@ -77,7 +78,18 @@ const Document: React.FC = () => {
         layout="horizontal"
         initialValues={{ size: "default" }}
       >
-        
+          
+          <Tabs
+        defaultActiveKey="1"
+        style={{ width: "100%",marginTop:"50px" }}
+        tabPosition="left"
+      >
+        <TabPane tab="Gestion de CV" key={1}>
+           
+  <GestionCV/>
+      
+        </TabPane>
+        <TabPane tab="Gestion de Contrat" key={2}>
         <Tabs
         defaultActiveKey="1"
         style={{ width: "100%" }}
@@ -133,7 +145,9 @@ const Document: React.FC = () => {
         <Editique/>
         </TabPane>
       </Tabs>
-      
+        </TabPane>
+       
+      </Tabs>
         
       </Form>
     

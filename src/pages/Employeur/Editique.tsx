@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import React, { useEffect, useState } from "react";
-import { Table, Button, Form, Col, Tabs, Avatar, Upload, Input, Row, Select, Spin } from "antd";
-import { AppstoreAddOutlined, DeleteOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
+import { Table, Button, Form, Col, Tabs, Upload, Input, Row, Select,  } from "antd";
+import { AppstoreAddOutlined, DeleteOutlined, UploadOutlined,  } from "@ant-design/icons";
 import TabPane from "antd/es/tabs/TabPane";
 import Title from "antd/es/typography/Title";
 import Editor from '@monaco-editor/react';
@@ -78,7 +79,7 @@ const Document: React.FC = () => {
   useEffect(() => {
     setValue(template)
     
-  }, []);
+  }, [template]);
   console.log({value,templatedata})
   return (
     <>
@@ -152,6 +153,7 @@ const Document: React.FC = () => {
                         />
                 </TabPane>
                 <TabPane tab="preview" key="2">
+                 
                   <iframe
                     name="my_iframe"
                     srcDoc={value}

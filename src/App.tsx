@@ -5,6 +5,11 @@ import React, { Component } from 'react';
 import TopBar from './pages/TopBar.tsx';
 import MultiStepForm from './pages/Employeur/MultiStepForm.tsx';
 import Documents from './pages/Employeur/Document.tsx';
+import GestionDeConge from './pages/Employeur/GestionDeConge.tsx';
+import GestionCVDetails from './pages/Employeur/GestionDeCVDetails.tsx';
+import AdvancedBusinessChart from './pages/Employeur/AdvancedBusinessChart.tsx';
+import WelcomePage from './pages/Employeur/BusinessChart.tsx';
+import GestionActivite from './pages/Employeur/GestionActivite.tsx';
 
 class App extends Component {
    
@@ -14,10 +19,17 @@ class App extends Component {
     <Router>
     <TopBar />
     <Routes>
-      {/* <Route exact path='/' component={Index}/> */}
+       <Route  path='/' element={<WelcomePage />}/> 
+      
+   
     
-      <Route path="/Profile" element={<MultiStepForm />} />
-      <Route path="/Documents" element={<Documents />} />
+      <Route path="/personnel" element={<MultiStepForm />} />
+      <Route path="/documents" element={<Documents />} />
+      <Route path="/conge" element={<GestionDeConge/>} />
+      <Route path="/activite" element={<GestionActivite/>} />
+
+      <Route path="documents/gestionCV/details/:id" element={<GestionCVDetails/>} />
+
       
      </Routes>
      </Router>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Steps, Button, message } from 'antd';
-import GeneralData from 'C:/Sesame/PFE/frontend/sirh/src/pages/Employeur/GeneralData';
-import EtatStatutaireForm from 'C:/Sesame/PFE/frontend/sirh/src/pages/Employeur/EtatStatutaireForm';
 import AffectationForm from './AffectationForm';
+import EtatStatutaireForm from './EtatStatutaireForm';
+import GeneralData from './GeneralData';
 
 const { Step } = Steps;
 
@@ -60,7 +60,7 @@ const MultiStepForm = () => {
   };
 
   return (
-    <div>
+    <div style={{margin:'70px'}}>
       <Steps current={current}>
         {steps.map((item) => (
           <Step key={item.title} title={item.title} />
