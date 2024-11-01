@@ -1,48 +1,70 @@
 // src/components/PieChartComponent.tsx
 
 import React from 'react';
-import {
-  PieChart,
-  Pie,
-  Tooltip,
-  Cell,
-  ResponsiveContainer,
-} from 'recharts';
-
-// Sample data for the pie chart
-const data = [
-  { name: 'Group A', value: 400 },
-  { name: 'Group B', value: 300 },
-  { name: 'Group C', value: 300 },
-  { name: 'Group D', value: 200 },
-];
-
-// Colors for each segment
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+import Chart from 'react-apexcharts';
+import { Row, Col, Card } from 'antd';
+import { ApexOptions } from 'apexcharts';
 
 const PieChartComponent: React.FC = () => {
+  const data = {
+    series: [400, 300, 300, 200],
+    labels: ['Group A', 'Group B', 'Group C', 'Group D'],
+  };
+
+  const options: ApexOptions = {
+    chart: {
+      type: 'donut', // Ensure this is 'donut' or 'pie'
+      animations: {
+        enabled: true,
+        easing: 'easeinout',
+        speed: 800,
+      },
+    },
+    colors: ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'],
+    labels: data.labels,
+    legend: {
+      show: true,
+      position: 'bottom',
+      formatter: (val: string, opts: { w: { globals: { series: number[] }; seriesIndex: number } }) => {
+        // Casting opts to any to access seriesIndex
+        return `${val} (${opts.w.globals.series[opts.w.seriesIndex]})`;
+      },
+    },
+    plotOptions: {
+      pie: {
+        customScale: 1,
+        dataLabels: {
+          offset: -10,
+        },
+        donut: {
+          size: '70%',
+          labels: {
+            show: true,
+            name: {
+              fontSize: '20px',
+              fontWeight: 'bold',
+            },
+            value: {
+              fontSize: '16px',
+              color: '#fff',
+            },
+          },
+        },
+      },
+    },
+    tooltip: {
+      theme: 'dark',
+    },
+  };
+
   return (
-    <div>
-      <h3 style={{ textAlign: 'center' }}>Pie Chart</h3>
-      <ResponsiveContainer width="100%" height={400}>
-        <PieChart>
-          <Tooltip />
-          <Pie
-            data={data}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            outerRadius={100} 
-            fill="#8884d8"
-            dataKey="value"
-          >
-            {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
+    <Row gutter={8}>
+      <Col span={24}>
+        <Card>
+          <Chart options={options} series={data.series} type="donut" height={300} />
+        </Card>
+      </Col>
+    </Row>
   );
 };
 

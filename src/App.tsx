@@ -7,9 +7,9 @@ import MultiStepForm from './pages/Employeur/MultiStepForm.tsx';
 import Documents from './pages/Employeur/Document.tsx';
 import GestionDeConge from './pages/Employeur/GestionDeConge.tsx';
 import GestionCVDetails from './pages/Employeur/GestionDeCVDetails.tsx';
-import AdvancedBusinessChart from './pages/Employeur/AdvancedBusinessChart.tsx';
 import WelcomePage from './pages/Employeur/BusinessChart.tsx';
 import GestionActivite from './pages/Employeur/GestionActivite.tsx';
+import DetailPage from './pages/Employeur/EntretienDetails.tsx';
 
 class App extends Component {
    
@@ -29,7 +29,7 @@ class App extends Component {
       <Route path="/activite" element={<GestionActivite/>} />
 
       <Route path="documents/gestionCV/details/:id" element={<GestionCVDetails/>} />
-
+      <Route path="activite/entretien/details/:id" element={<DetailPage/>} />
       
      </Routes>
      </Router>

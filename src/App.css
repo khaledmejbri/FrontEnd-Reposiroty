@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+th.ant-table-cell {
+  background-color: #6195d4db !important;
+  color: #ffff !important;
+}
+td.ant-table-cell {
+  background-color: #9dc9ff69 !important;
+}
+
+

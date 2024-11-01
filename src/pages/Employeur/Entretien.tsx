@@ -17,14 +17,14 @@ import {
 import Title from "antd/es/typography/Title";
 import templatedata from "../../data/GeneralData.json";
 import Card from "antd/es/card/Card";
+import { Link, useNavigate } from "react-router-dom";
 
 interface TeamBuildingInterface {
-  horaires: string; 
-  placement: string;
-  theme: string;
-  titre: string;
+  niveauEN: string; 
+  niveauFR: string;
+  nom: string;
   id :number;
-  EventName:string
+  nomFormation:string
 
   
 }
@@ -33,53 +33,57 @@ const TeamBuilding: React.FC = () => {
   const [dataSource, setDataSource] = useState<TeamBuildingInterface[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newEntry, setNewEntry] = useState<TeamBuildingInterface>({
-    horaires: "",
-    placement: "",
-    titre: "",
-    theme: "",
+    niveauEN: "",
+    niveauFR: "",
+    nom: "",
     id :0,
-    EventName:"",
+    nomFormation:"",
 
   });
 
   const [filters, setFilters] = useState({
-    horaires: "",
-    placement: "",
-    titre: "",
-    theme: "",
+    niveauEN: "",
+    niveauFR: "",
+    nom: "",
     id :0,
-    EventName:"",
+    nomFormation:"",
 
   });
 
   const columns = [
     {
-      title: "EventName",
-      dataIndex: "EventName", 
-      key: "EventName",
+      title: "Nom de Condidat",
+      dataIndex: "nom",
+      key: "nom",
+      render: (text: string, record: TeamBuildingInterface) => (
+        <Link to={`entretien/details/${record.id}`}>{text}</Link>
+      ),
+    },
+    {
+      title: "Nom de Formation",
+      dataIndex: "nomFormation", 
+      key: "nomFormation",
     },
    
     {
-      title: "Horaire",
-      dataIndex: "horaires", 
-      key: "horaires",
+      title: "Niveau FR",
+      dataIndex: "niveauFR", 
+      key: "niveauFR",
     },
     {
-      title: "Placement",
-      dataIndex: "placement",
-      key: "placement",
+      title: "Niveau EN",
+      dataIndex: "niveauEN",
+      key: "niveauEN",
     },
     {
-      title: "Thème",
-      dataIndex: "theme",
-      key: "theme",
+      title: "escription",
+      dataIndex: "description",
+      key: "description",
     },
-    {
-      title: "Titre",
-      dataIndex: "titre",
-      key: "titre",
-    },
+ 
+    
   ];
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSearch = () => {
     const filteredData = templatedata
@@ -88,15 +92,13 @@ const TeamBuilding: React.FC = () => {
         key: building.id.toString(),
       }))
       .filter((building) => {
-        const matchHoraire = !filters.horaires || building.horaires === filters.horaires; // changed from Horaires to horaires
-        const matchPlacement = !filters.placement || building.placement === filters.placement;
-        const matchTheme = !filters.theme || building.theme === filters.theme;
-        const matchTitre = !filters.titre || building.titre === filters.titre;
+        const matchniveauEN = !filters.niveauEN || building.niveauEN === filters.niveauEN; 
+        const matchniveauFR = !filters.niveauFR || building.niveauFR === filters.niveauFR;
+        const matchnom = !filters.nom || building.nom === filters.nom;
         return (
-          matchPlacement &&
-          matchTheme &&
-          matchTitre &&
-          matchHoraire
+          matchniveauFR &&
+          matchnom &&
+          matchniveauEN
         );
       });
 
@@ -105,11 +107,10 @@ const TeamBuilding: React.FC = () => {
 
   const handleClearFilters = () => {
     setFilters({
-      EventName:"",
-      horaires: "",
-      placement: "",
-      titre: "",
-      theme: "",
+      nomFormation:"",
+      niveauEN: "",
+      niveauFR: "",
+      nom: "",
       id :0,
     });
     setDataSource(
@@ -135,11 +136,10 @@ const TeamBuilding: React.FC = () => {
     setIsModalVisible(false);
     setNewEntry({
       id :0,
-      horaires: "",
-      placement: "",
-      titre: "",
-      theme: "",
-      EventName:"",
+      niveauEN: "",
+      niveauFR: "",
+      nom: "",
+      nomFormation:"",
 
     });
   };
@@ -160,25 +160,25 @@ const TeamBuilding: React.FC = () => {
           <Row gutter={16}>
             <Col xs={24}>
               <Title level={4} style={{ marginBottom: 20, color: "#214f87" }}>
-                Liste des événements Team Building
+                Liste des Entretiens
               </Title>
             </Col>
 
             <Col xs={12} md={5}>
-              <Form.Item label="EventName">
+              <Form.Item label="nomFormation">
                 <Select
                   showSearch
-                  value={filters.EventName}
-                  onChange={(value) => setFilters({ ...filters, EventName: value })}
-                  placeholder="Chercher par EventName"
+                  value={filters.nomFormation}
+                  onChange={(value) => setFilters({ ...filters, nomFormation: value })}
+                  placeholder="Chercher par nomFormation"
                   optionFilterProp="children"
                   onSelect={(e) => {
-                    setFilters({ ...filters, EventName: e });
+                    setFilters({ ...filters, nomFormation: e });
                   }}
                 >
                   {dataSource.map((item) => (
-                    <Select.Option key={item.id} value={item.EventName}>
-                      {item.EventName}
+                    <Select.Option key={item.id} value={item.nomFormation}>
+                      {item.nomFormation}
                     </Select.Option>
                   ))}
                 </Select>
@@ -186,26 +186,46 @@ const TeamBuilding: React.FC = () => {
             </Col>
            
             <Col xs={12} md={5}>
-              <Form.Item label="Horaires">
+              <Form.Item label="niveauEN">
               <Select
                   showSearch
-                  value={filters.horaires}
-                  onChange={(value) => setFilters({ ...filters, horaires: value })}
-                  placeholder="Chercher par horaires"
+                  value={filters.niveauEN}
+                  onChange={(value) => setFilters({ ...filters, niveauEN: value })}
+                  placeholder="Chercher par niveauEN"
                   optionFilterProp="children"
                   onSelect={(e) => {
-                    setFilters({ ...filters, horaires: e });
+                    setFilters({ ...filters, niveauEN: e });
                   }}
                 >
                   {dataSource.map((item) => (
-                    <Select.Option key={item.id} value={item.horaires}>
-                      {item.horaires}
+                    <Select.Option key={item.id} value={item.niveauEN}>
+                      {item.niveauEN}
                     </Select.Option>
                   ))}
                 </Select>
               </Form.Item>
             </Col>
-            <Col xs={24} md={12}>
+            <Col xs={12} md={5}>
+              <Form.Item label="niveauFR">
+              <Select
+                  showSearch
+                  value={filters.niveauFR}
+                  onChange={(value) => setFilters({ ...filters, niveauFR: value })}
+                  placeholder="Chercher par niveauFR"
+                  optionFilterProp="children"
+                  onSelect={(e) => {
+                    setFilters({ ...filters, niveauFR: e });
+                  }}
+                >
+                  {dataSource.map((item) => (
+                    <Select.Option key={item.id} value={item.niveauFR}>
+                      {item.niveauFR}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={9}>
               <Button
                 type="primary"
                 style={{
@@ -213,7 +233,8 @@ const TeamBuilding: React.FC = () => {
                   marginRight: 20,
                   float: "right",
                 }}
-                onClick={showModal}
+                onClick={() => navigate(`entretien/details/${null}`)}
+
                
               >
                 <AppstoreAddOutlined /> Ajouter
@@ -242,46 +263,8 @@ const TeamBuilding: React.FC = () => {
                 <ClearOutlined /> Clear
               </Button>
             </Col>
-            <Col xs={12} md={5}>
-              <Form.Item label="Placement">
-              <Select
-                  showSearch
-                  value={filters.placement}
-                  onChange={(value) => setFilters({ ...filters, placement: value })}
-                  placeholder="Chercher par placement"
-                  optionFilterProp="children"
-                  onSelect={(e) => {
-                    setFilters({ ...filters, placement: e });
-                  }}
-                >
-                  {dataSource.map((item) => (
-                    <Select.Option key={item.id} value={item.placement}>
-                      {item.placement}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={5}>
-              <Form.Item label="Thème">
-              <Select
-                  showSearch
-                  value={filters.theme}
-                  onChange={(value) => setFilters({ ...filters, theme: value })}
-                  placeholder="Chercher par theme"
-                  optionFilterProp="children"
-                  onSelect={(e) => {
-                    setFilters({ ...filters, theme: e });
-                  }}
-                >
-                  {dataSource.map((item) => (
-                    <Select.Option key={item.id} value={item.theme}>
-                      {item.theme}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
+        
+            
 
           
            
@@ -297,30 +280,25 @@ const TeamBuilding: React.FC = () => {
           onCancel={() => setIsModalVisible(false)}
         >
           <Form layout="vertical">
-          <Form.Item label="Titre">
+          <Form.Item label="nom">
               <Input
-                value={newEntry.titre}
-                onChange={(e) => setNewEntry({ ...newEntry, titre: e.target.value })}
+                value={newEntry.nom}
+                onChange={(e) => setNewEntry({ ...newEntry, nom: e.target.value })}
               />
             </Form.Item>
-            <Form.Item label="Horaires">
+            <Form.Item label="niveauEN">
               <Input
-                value={newEntry.horaires} // changed from Horaires to horaires
-                onChange={(e) => setNewEntry({ ...newEntry, horaires: e.target.value })}
+                value={newEntry.niveauEN} // changed from niveauEN to niveauEN
+                onChange={(e) => setNewEntry({ ...newEntry, niveauEN: e.target.value })}
               />
             </Form.Item>
-            <Form.Item label="Placement">
+            <Form.Item label="niveauFR">
               <Input
-                value={newEntry.placement}
-                onChange={(e) => setNewEntry({ ...newEntry, placement: e.target.value })}
+                value={newEntry.niveauFR}
+                onChange={(e) => setNewEntry({ ...newEntry, niveauFR: e.target.value })}
               />
             </Form.Item>
-            <Form.Item label="Thème">
-              <Input
-                value={newEntry.theme}
-                onChange={(e) => setNewEntry({ ...newEntry, theme: e.target.value })}
-              />
-            </Form.Item>
+           
            
            
           </Form>

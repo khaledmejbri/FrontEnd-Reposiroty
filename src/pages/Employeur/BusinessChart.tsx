@@ -8,15 +8,17 @@ import PieChartComponent from './PieChartComponent';
 
 const WelcomePage: React.FC = () => {
   return (
-    <div>
+    <div  typeof='container'>
       <h1>Welcome to the Dashboard</h1>
-      <Row>
+      <Row gutter={8}>
      
-        <Col span={12}>
+        <Col span={8}>
       <AdvancedBusinessChart />
+      </Col>
+      <Col span={8}>
       <BarHistogram /> 
       </Col>
-      <Col span={12}>
+      <Col span={8}>
       <PieChartComponent />
       </Col>
     

@@ -2,6 +2,8 @@ import React from "react";
 import {  Form,Tabs,  } from "antd";
 import TabPane from "antd/es/tabs/TabPane";
 import TeamBuilding from "./TeamBuilding";
+import Formation from "./Formation";
+import Entretien from "./Entretien";
 
 
 
@@ -20,8 +22,14 @@ const GestionActivite: React.FC = () => {
         style={{ width: "100%",marginTop:"50px" }}
         tabPosition="left"
       >
-        <TabPane tab="Order De Mession" key={5} >
+        <TabPane tab="Team Building" key={1} >
         <TeamBuilding/>
+        </TabPane>
+        <TabPane tab="Formation" key={2} >
+        <Formation/>
+        </TabPane>
+        <TabPane tab="Entretien" key={3} >
+        <Entretien/>
         </TabPane>
       </Tabs>
       

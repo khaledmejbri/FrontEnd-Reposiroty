@@ -1,5 +1,6 @@
 // src/components/BarHistogram.tsx
 
+import { Row, Col, Card } from 'antd';
 import React from 'react';
 import {
   BarChart,
@@ -25,8 +26,9 @@ const data = [
 
 const BarHistogram: React.FC = () => {
   return (
-    <div>
-      <h3 style={{ textAlign: 'center' }}>Bar Histogram</h3>
+    <Row gutter={8}>
+      <Col span={24}>
+      <Card>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -37,7 +39,8 @@ const BarHistogram: React.FC = () => {
           <Bar dataKey="value" fill="#82ca9d" />
         </BarChart>
       </ResponsiveContainer>
-    </div>
+   </Card>
+   </Col></Row>
   );
 };
 

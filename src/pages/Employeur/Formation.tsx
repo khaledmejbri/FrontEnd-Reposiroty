@@ -21,10 +21,9 @@ import Card from "antd/es/card/Card";
 interface TeamBuildingInterface {
   horaires: string; 
   placement: string;
-  theme: string;
-  titre: string;
+  nom: string;
   id :number;
-  EventName:string
+  nomFormation:string
 
   
 }
@@ -35,28 +34,26 @@ const TeamBuilding: React.FC = () => {
   const [newEntry, setNewEntry] = useState<TeamBuildingInterface>({
     horaires: "",
     placement: "",
-    titre: "",
-    theme: "",
+    nom: "",
     id :0,
-    EventName:"",
+    nomFormation:"",
 
   });
 
   const [filters, setFilters] = useState({
     horaires: "",
     placement: "",
-    titre: "",
-    theme: "",
+    nom: "",
     id :0,
-    EventName:"",
+    nomFormation:"",
 
   });
 
   const columns = [
     {
-      title: "EventName",
-      dataIndex: "EventName", 
-      key: "EventName",
+      title: "nomFormation",
+      dataIndex: "nomFormation", 
+      key: "nomFormation",
     },
    
     {
@@ -69,15 +66,11 @@ const TeamBuilding: React.FC = () => {
       dataIndex: "placement",
       key: "placement",
     },
+ 
     {
-      title: "Thème",
-      dataIndex: "theme",
-      key: "theme",
-    },
-    {
-      title: "Titre",
-      dataIndex: "titre",
-      key: "titre",
+      title: "Nom de formateur",
+      dataIndex: "nom",
+      key: "nom",
     },
   ];
 
@@ -90,12 +83,10 @@ const TeamBuilding: React.FC = () => {
       .filter((building) => {
         const matchHoraire = !filters.horaires || building.horaires === filters.horaires; // changed from Horaires to horaires
         const matchPlacement = !filters.placement || building.placement === filters.placement;
-        const matchTheme = !filters.theme || building.theme === filters.theme;
-        const matchTitre = !filters.titre || building.titre === filters.titre;
+        const matchnom = !filters.nom || building.nom === filters.nom;
         return (
           matchPlacement &&
-          matchTheme &&
-          matchTitre &&
+          matchnom &&
           matchHoraire
         );
       });
@@ -105,11 +96,10 @@ const TeamBuilding: React.FC = () => {
 
   const handleClearFilters = () => {
     setFilters({
-      EventName:"",
+      nomFormation:"",
       horaires: "",
       placement: "",
-      titre: "",
-      theme: "",
+      nom: "",
       id :0,
     });
     setDataSource(
@@ -137,9 +127,8 @@ const TeamBuilding: React.FC = () => {
       id :0,
       horaires: "",
       placement: "",
-      titre: "",
-      theme: "",
-      EventName:"",
+      nom: "",
+      nomFormation:"",
 
     });
   };
@@ -160,25 +149,25 @@ const TeamBuilding: React.FC = () => {
           <Row gutter={16}>
             <Col xs={24}>
               <Title level={4} style={{ marginBottom: 20, color: "#214f87" }}>
-                Liste des événements Team Building
+                Liste des Formations
               </Title>
             </Col>
 
             <Col xs={12} md={5}>
-              <Form.Item label="EventName">
+              <Form.Item label="nomFormation">
                 <Select
                   showSearch
-                  value={filters.EventName}
-                  onChange={(value) => setFilters({ ...filters, EventName: value })}
-                  placeholder="Chercher par EventName"
+                  value={filters.nomFormation}
+                  onChange={(value) => setFilters({ ...filters, nomFormation: value })}
+                  placeholder="Chercher par nomFormation"
                   optionFilterProp="children"
                   onSelect={(e) => {
-                    setFilters({ ...filters, EventName: e });
+                    setFilters({ ...filters, nomFormation: e });
                   }}
                 >
                   {dataSource.map((item) => (
-                    <Select.Option key={item.id} value={item.EventName}>
-                      {item.EventName}
+                    <Select.Option key={item.id} value={item.nomFormation}>
+                      {item.nomFormation}
                     </Select.Option>
                   ))}
                 </Select>
@@ -205,7 +194,27 @@ const TeamBuilding: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col xs={24} md={12}>
+            <Col xs={12} md={5}>
+              <Form.Item label="Placement">
+              <Select
+                  showSearch
+                  value={filters.placement}
+                  onChange={(value) => setFilters({ ...filters, placement: value })}
+                  placeholder="Chercher par placement"
+                  optionFilterProp="children"
+                  onSelect={(e) => {
+                    setFilters({ ...filters, placement: e });
+                  }}
+                >
+                  {dataSource.map((item) => (
+                    <Select.Option key={item.id} value={item.placement}>
+                      {item.placement}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={9}>
               <Button
                 type="primary"
                 style={{
@@ -242,46 +251,8 @@ const TeamBuilding: React.FC = () => {
                 <ClearOutlined /> Clear
               </Button>
             </Col>
-            <Col xs={12} md={5}>
-              <Form.Item label="Placement">
-              <Select
-                  showSearch
-                  value={filters.placement}
-                  onChange={(value) => setFilters({ ...filters, placement: value })}
-                  placeholder="Chercher par placement"
-                  optionFilterProp="children"
-                  onSelect={(e) => {
-                    setFilters({ ...filters, placement: e });
-                  }}
-                >
-                  {dataSource.map((item) => (
-                    <Select.Option key={item.id} value={item.placement}>
-                      {item.placement}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={12} md={5}>
-              <Form.Item label="Thème">
-              <Select
-                  showSearch
-                  value={filters.theme}
-                  onChange={(value) => setFilters({ ...filters, theme: value })}
-                  placeholder="Chercher par theme"
-                  optionFilterProp="children"
-                  onSelect={(e) => {
-                    setFilters({ ...filters, theme: e });
-                  }}
-                >
-                  {dataSource.map((item) => (
-                    <Select.Option key={item.id} value={item.theme}>
-                      {item.theme}
-                    </Select.Option>
-                  ))}
-                </Select>
-              </Form.Item>
-            </Col>
+        
+            
 
           
            
@@ -297,10 +268,10 @@ const TeamBuilding: React.FC = () => {
           onCancel={() => setIsModalVisible(false)}
         >
           <Form layout="vertical">
-          <Form.Item label="Titre">
+          <Form.Item label="nom">
               <Input
-                value={newEntry.titre}
-                onChange={(e) => setNewEntry({ ...newEntry, titre: e.target.value })}
+                value={newEntry.nom}
+                onChange={(e) => setNewEntry({ ...newEntry, nom: e.target.value })}
               />
             </Form.Item>
             <Form.Item label="Horaires">
@@ -315,12 +286,7 @@ const TeamBuilding: React.FC = () => {
                 onChange={(e) => setNewEntry({ ...newEntry, placement: e.target.value })}
               />
             </Form.Item>
-            <Form.Item label="Thème">
-              <Input
-                value={newEntry.theme}
-                onChange={(e) => setNewEntry({ ...newEntry, theme: e.target.value })}
-              />
-            </Form.Item>
+           
            
            
           </Form>
