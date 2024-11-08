@@ -3,24 +3,47 @@ import { Table, Button, Form, Col, Row, Select, DatePicker } from "antd";
 import { ClearOutlined, CopyOutlined, SearchOutlined,  } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 import moment from "moment";
-import templatedata from "../../data/mesConge.json";
+import templatedata from "../../data/Pointage.json";
 import Card from "antd/es/card/Card";
 import { CSVLink } from 'react-csv';
 
 interface MesPresence {
-  key: string;
-  reference: string;
-  status: string; // "Valid" or "NonValid"
-  startDate: string;
+  name:string;
+  employeeId: number;
+  date: string;
+  checkInTime: string | null;
+  checkOutTime: string | null;
+  totalHours: number | null;
+  isAbsent: boolean; 
+  overtimeHours: null,
+  breakMinutes: null,
+  shiftType: string,
+  location: string,
+  isRemote: boolean,
+  deviceId: null,
+  isLate: boolean,
+  remarks: string
 }
 
 const MesPresences: React.FC = () => {
   const [dataSource, setDataSource] = useState<MesPresence[]>([]);
 
   const [filters, setFilters] = useState({
-    reference: "",
-    status: "",
-    startDate: null as string | null,
+    name:"",
+  employeeId: 0,
+  date: "",
+  checkInTime: "",
+  checkOutTime:"",
+  totalHours:0,
+  isAbsent: false,
+  overtimeHours: null,
+  breakMinutes: null,
+  shiftType: "",
+  location: "",
+  isRemote: false,
+  deviceId: null,
+  isLate: false,
+  remarks: ""
   });
 
   useEffect(() => {
@@ -35,33 +58,19 @@ const MesPresences: React.FC = () => {
  
 
   const columns = [
-    {
-      title: "Date",
-      dataIndex: "startDate",
-      key: "startDate",
+    { title: "Date", dataIndex: "date", key: "date" },
+    { title: "Check In Time", dataIndex: "checkInTime", key: "checkInTime" },
+    { title: "Check Out Time", dataIndex: "checkOutTime", key: "checkOutTime" },
+    { title: "Total Hours", dataIndex: "totalHours", key: "totalHours" },
+    { title: "Late", dataIndex: "isLate", key: "isLate", 
+      render: (isLate: boolean) => (
+        <span style={{ color: isLate ? "red" : "green" }}>
+          {isLate ? "Yes" : "No"}
+        </span>
+      ),
     },
-    {
-      title: "Reference",
-      dataIndex: "reference",
-      key: "reference",
-    },
-  
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status: string) => {
-        const statusLabels: { [key: string]: string } = {
-          Valide: "Validé",
-          NonValide: "Non Validé",
-          EnCours: "En Cours",
-        };
-        return <span style={{ color: status === "Valide" ? "green" : status === "EnCours" ? "orange" : "red" }}>{statusLabels[status] || status}</span>;
-      },
-    },
-   
-   
   ];
+  
 
   const handleSearch = () => {
     const filteredData = templatedata
@@ -70,15 +79,11 @@ const MesPresences: React.FC = () => {
         key: `presence-${index}`, // Ensure the 'key' is included
       }))
       .filter((presence) => {
-        const matchReference =
-          !filters.reference || presence.reference.includes(filters.reference);
-        const matchStatus = !filters.status || presence.status === filters.status;
+       
         const matchStartDate =
-          !filters.startDate ||
-          moment(presence.startDate).isSameOrAfter(moment(filters.startDate));
+          !filters.date ||
+          moment(presence.date).isSameOrAfter(moment(filters.date));
         return (
-          matchReference &&
-          matchStatus &&
           matchStartDate 
         );
       });
@@ -87,9 +92,21 @@ const MesPresences: React.FC = () => {
 
   const handleClearFilters = () => {
     setFilters({
-      reference: "",
-      status: "",
-      startDate: null,
+      name:"",
+  employeeId: 0,
+  date: "",
+  checkInTime: "",
+  checkOutTime:"",
+  totalHours:0,
+  isAbsent: false,
+  overtimeHours: null,
+  breakMinutes: null,
+  shiftType: "",
+  location: "",
+  isRemote: false,
+  deviceId: null,
+  isLate: false,
+  remarks: ""
     });
     // Optionally, reset the filtered data source to the full unfiltered list
     const dataWithKeys = templatedata.map((presence, index) => ({
@@ -100,9 +117,12 @@ const MesPresences: React.FC = () => {
   };
 
   const csvHeaders = [
-    { label: "Reference", key: "reference" },
-    { label: "Status", key: "status" },
-    { label: "Start Date", key: "startDate" },
+    { label: "date", key: "date" },
+    { label: "checkInTime", key: "checkInTime" },
+    { label: "checkOutTime", key: "checkOutTime" },
+    { label: "totalHours", key: "totalHours" },
+    { label: " isAbsent", key: "isAbsent" },
+
   ];
 
   return (
@@ -124,8 +144,8 @@ const MesPresences: React.FC = () => {
             <Col xs={12} md={4}>
               <Form.Item label="Status">
                 <Select
-                  value={filters.status}
-                  onChange={(value) => setFilters({ ...filters, status: value })}
+                  value={filters.date}
+                  onChange={(value) => setFilters({ ...filters, date: value })}
                 >
                   <Select.Option value="">Tous</Select.Option>
                   <Select.Option value="Ok">Accepter</Select.Option>
@@ -139,11 +159,11 @@ const MesPresences: React.FC = () => {
                 <DatePicker
                   required
                   style={{ width: "100%" }}
-                  value={filters.startDate ? moment(filters.startDate) : null}
+                  value={filters.date ? moment(filters.date) : null}
                   onChange={(date) =>
                     setFilters({
                       ...filters,
-                      startDate: date ? date.format("YYYY-MM-DD") : null,
+                      date:date.format("YYYY-MM-DD") ,
                     })
                   }
                 />

@@ -1,0 +1,112 @@
+{
+  "questionModels": [
+    {
+      "id": 1,
+      "modelName": "Java Developer Technical Questions",
+      "questions": [
+        {
+          "id": 1,
+          "questionText": "What is the difference between an abstract class and an interface in Java?",
+          "correctAnswers": "An abstract class can have both abstract and concrete methods. An interface can only have abstract methods (before Java 8). A class can extend only one abstract class but can implement multiple interfaces.",
+          "candidateResponses": "Abstract classes can have both abstract and concrete methods. Interfaces can have default methods in Java 8+. A class can implement multiple interfaces, but only inherit one abstract class.",
+          "ProposedAnswers": [
+            { "id": 1, "Answer": "An abstract class can have both abstract and concrete methods." },
+            { "id": 2, "Answer": "An interface can only have abstract methods (before Java 8)." },
+            { "id": 3, "Answer": "A class can extend only one abstract class but can implement multiple interfaces." }
+          ]
+        },
+        {
+          "id": 2,
+          "questionText": "What is the purpose of the 'final' keyword in Java?",
+          "correctAnswers": "It can be used to declare constants. It can be used to prevent method overriding. It can be used to prevent inheritance of classes.",
+          "candidateResponses": "Final can be used to declare constants. It prevents classes from being inherited and methods from being overridden. It is used to prevent variable modification.",
+          "ProposedAnswers": [
+            { "id": 1, "Answer": "It can be used to declare constants." },
+            { "id": 2, "Answer": "It can be used to prevent method overriding." },
+            { "id": 3, "Answer": "It can be used to prevent inheritance of classes." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "modelName": "Database Management System Questions",
+      "questions": [
+        {
+          "id": 3,
+          "questionText": "What is normalization in database design?",
+          "correctAnswers": "Normalization is the process of organizing data to reduce redundancy. It ensures that data dependencies are logically stored in the database.",
+          "candidateResponses": "Normalization reduces redundancy and improves data integrity. Normalization involves splitting tables into smaller, more manageable parts.",
+          "ProposedAnswers": [
+            { "id": 1, "Answer": "Normalization is the process of organizing data to reduce redundancy." },
+            { "id": 2, "Answer": "It ensures that data dependencies are logically stored in the database." }
+          ]
+        },
+        {
+          "id": 4,
+          "questionText": "Explain the ACID properties of a transaction.",
+          "correctAnswers": "Atomicity: All or nothing. Consistency: Ensures the database is in a consistent state. Isolation: Transactions are isolated from each other. Durability: Once committed, the transaction is permanent.",
+          "candidateResponses": "ACID stands for Atomicity, Consistency, Isolation, and Durability. Atomicity ensures that transactions are fully completed or not executed at all.",
+          "ProposedAnswers": [
+            { "id": 1, "Answer": "Atomicity: All or nothing." },
+            { "id": 2, "Answer": "Consistency: Ensures the database is in a consistent state." },
+            { "id": 3, "Answer": "Isolation: Transactions are isolated from each other." },
+            { "id": 4, "Answer": "Durability: Once committed, the transaction is permanent." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "modelName": "Data Structures and Algorithms",
+      "questions": [
+        {
+          "id": 5,
+          "questionText": "What is a binary search algorithm?",
+          "correctAnswers": "Binary search is an efficient algorithm for finding an item in a sorted list by repeatedly dividing the search interval in half.",
+          "candidateResponses": "Binary search divides the array into two halves to find the middle element.",
+          "ProposedAnswers": [
+            { "id": 1, "Answer": "An algorithm to search for an item in a sorted array." },
+            { "id": 2, "Answer": "An efficient way to find an item in a list by dividing it in half each step." }
+          ]
+        },
+        {
+          "id": 6,
+          "questionText": "Explain the time complexity of quicksort.",
+          "correctAnswers": "The average-case time complexity of quicksort is O(n log n), while the worst case is O(n^2).",
+          "candidateResponses": "Quicksort averages O(n log n) but can degrade to O(n^2) if the pivot is poorly chosen.",
+          "ProposedAnswers": [
+            { "id": 1, "Answer": "Average case: O(n log n)." },
+            { "id": 2, "Answer": "Worst case: O(n^2)." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "modelName": "Software Engineering Concepts",
+      "questions": [
+        {
+          "id": 7,
+          "questionText": "What is the difference between agile and waterfall development methodologies?",
+          "correctAnswers": "Agile is an iterative, flexible approach, while Waterfall is a linear and sequential approach.",
+          "candidateResponses": "Agile adapts to changes throughout the project, whereas Waterfall follows a fixed sequence of phases.",
+          "ProposedAnswers": [
+            { "id": 1, "Answer": "Agile is iterative and flexible." },
+            { "id": 2, "Answer": "Waterfall is linear and sequential." }
+          ]
+        },
+        {
+          "id": 8,
+          "questionText": "What is continuous integration?",
+          "correctAnswers": "Continuous integration is a development practice where code changes are automatically tested and integrated into the main branch frequently.",
+          "candidateResponses": "Continuous integration allows developers to integrate code changes frequently to detect errors early.",
+          "ProposedAnswers": [
+            { "id": 1, "Answer": "A practice to test and integrate code changes frequently." },
+            { "id": 2, "Answer": "A method to ensure code stability by early error detection." }
+          ]
+        }
+      ]
+    }
+  ]
+}

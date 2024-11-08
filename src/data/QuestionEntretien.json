@@ -1,0 +1,62 @@
+{
+    "entretien": {
+      "id": 101,
+      "title": "Technical Interview for Java Developers",
+      "date": "2024-11-08"
+    },
+    "questions": [
+      {
+        "id": 1,
+        "questionText": "What is the difference between an abstract class and an interface in Java?",
+        "correctAnswers": [
+          "An abstract class can have both abstract and concrete methods.",
+          "An interface can only have abstract methods (before Java 8).",
+          "A class can extend only one abstract class but can implement multiple interfaces."
+        ],
+        "candidateResponses": [
+          "Abstract classes can have both abstract and concrete methods.",
+          "Interfaces can have default methods in Java 8+.",
+          "A class can implement multiple interfaces, but only inherit one abstract class."
+        ]
+      },
+      {
+        "id": 2,
+        "questionText": "What is the purpose of the 'final' keyword in Java?",
+        "correctAnswers": [
+          "It can be used to declare constants.",
+          "It can be used to prevent method overriding.",
+          "It can be used to prevent inheritance of classes."
+        ],
+        "candidateResponses": [
+          "Final can be used to declare constants.",
+          "It prevents classes from being inherited and methods from being overridden.",
+          "It is used to prevent variable modification."
+        ]
+      },
+      {
+        "id": 3,
+        "questionText": "What is overfitting in machine learning?",
+        "correctAnswers": [
+          "When a model learns the details and noise in the training data to the point that it negatively impacts the model's performance on new data.",
+          "It typically happens when the model is too complex relative to the amount of training data."
+        ],
+        "candidateResponses": [
+          "Overfitting occurs when the model memorizes the training data and fails to generalize."
+        ]
+      },
+      {
+        "id": 4,
+        "questionText": "Explain the difference between SQL and NoSQL databases.",
+        "correctAnswers": [
+          "SQL databases are relational and use structured query language.",
+          "NoSQL databases are non-relational and store data in various formats (like JSON, key-value pairs).",
+          "SQL databases are best suited for structured data, while NoSQL is more flexible for unstructured data."
+        ],
+        "candidateResponses": [
+          "SQL is relational and uses tables, while NoSQL uses documents or key-value stores.",
+          "SQL is for structured data, NoSQL is better for handling unstructured data."
+        ]
+      }
+    ]
+  }
+  

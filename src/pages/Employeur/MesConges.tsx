@@ -2,36 +2,44 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Form, Col, Row, Select, DatePicker, Modal } from "antd";
 import { AppstoreAddOutlined, ClearOutlined, DeleteOutlined, SearchOutlined } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
-import templatedata from "../../data/mesConge.json";
+import templatedata from "../../data/ListConge.json";
 import moment from "moment"; // For date filtering
 import Card from "antd/es/card/Card";
 
 interface MesConge {
-  key: string;
-  reference: string;
-  status: string; // "Ok" or "Ref"
-  type: string; // "Pay", "Mald", "Matr", "SanSold"
+  id: string;
+  status: string; // "EnCours", "Approved", "Refused"
+  type: string; // "Pay", "Unpaid", "Medical", etc.
   startDate: string;
   endDate: string;
+  soldeConge: number; // remaining leave balance
+  totalDaysPerYear: number;
+  daysTaken: number; // totalDaysPerYear - soldeConge
+
 }
 
 const MesCongs: React.FC = () => {
   const [dataSource, setDataSource] = useState<MesConge[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newEntry, setNewEntry] = useState<MesConge>({
-    key: '',
-    reference: '',
-    status: 'Ok', // Default status
-    type: 'Pay',  // Default type
-    startDate: '',
-    endDate: ''
+    id: "",
+    status: "", 
+    type: "", 
+    startDate: "",
+    endDate: "",
+    soldeConge:0,
+    totalDaysPerYear:0,
+    daysTaken:0
   });
   const [filters, setFilters] = useState({
-    reference: "",
-    type: "",
-    status: "",
-    startDate: null as string | null,
-    endDate: null as string | null,
+    id: "",
+    status: "", 
+    type: "", 
+    startDate: "",
+    endDate: "",
+    soldeConge:0,
+    totalDaysPerYear:0,
+    daysTaken:0
   });
 
   useEffect(() => {
@@ -44,16 +52,12 @@ const MesCongs: React.FC = () => {
   }, []);
 
   const handleDelete = (key: string) => {
-    const newData = dataSource.filter((item) => item.key !== key);
+    const newData = dataSource.filter((item) => item.id !== key);
     setDataSource(newData);
   };
 
   const columns = [
-    {
-      title: "Reference",
-      dataIndex: "reference",
-      key: "reference",
-    },
+  
     {
       title: "Type",
       dataIndex: "type",
@@ -100,7 +104,7 @@ const MesCongs: React.FC = () => {
           return (
         <Button
           type="primary"
-          onClick={() => handleDelete(record.key)}
+          onClick={() => handleDelete(record.id)}
           style={{ backgroundColor: "#d96666", borderColor: "#d96666" }}
         >
           <DeleteOutlined /> Delete
@@ -118,7 +122,7 @@ const MesCongs: React.FC = () => {
       }))
       .filter((leave) => {
         const matchReference =
-          !filters.reference || leave.reference.includes(filters.reference);
+          !filters.type || leave.type.includes(filters.type);
         const matchType = !filters.type || leave.type === filters.type;
         const matchStatus = !filters.status || leave.status === filters.status;
         const matchStartDate =
@@ -141,17 +145,19 @@ const MesCongs: React.FC = () => {
   // Clear filters and reset table
   const handleClearFilters = () => {
     setFilters({
-      reference: "",
-      type: "",
-      status: "",
-      startDate: null,
-      endDate: null,
-    });
+      id: "",
+      status: "", 
+      type: "", 
+      startDate: "",
+      endDate: "",
+      soldeConge:0,
+      totalDaysPerYear:0,
+      daysTaken:0})
     // Optionally, reset the filtered data source to the full unfiltered list
     const dataWithKeys = templatedata.map((leave, index) => ({
       ...leave,
       key: `leave-${index}`,
-      reference: `REF-${Date.now()}`,
+      
     }));
     setDataSource(dataWithKeys);
   };
@@ -171,12 +177,14 @@ const handleAddEntry = () => {
   setDataSource([ newData,...dataSource]); // Add new entry to data source
   setIsModalVisible(false); // Close the modal
   setNewEntry({
-    key: '',
-    reference: '',
-    status: 'waiting',
-    type: '', 
-    startDate: '',
-    endDate: ''
+    id: "",
+    status: "", 
+    type: "", 
+    startDate: "",
+    endDate: "",
+    soldeConge:0,
+    totalDaysPerYear:0,
+    daysTaken:0
   }); // Reset form data
 };
   return (
@@ -239,7 +247,7 @@ const handleAddEntry = () => {
                   onChange={(date) =>
                     setFilters({
                       ...filters,
-                      startDate: date ? date.format("YYYY-MM-DD") : null,
+                      startDate: date.format("YYYY-MM-DD") ,
                     })
                   }
                 />
@@ -251,11 +259,11 @@ const handleAddEntry = () => {
                 <DatePicker
                 required
                 style={{width:"100%"}}
-                  value={filters.endDate ? moment(filters.endDate) : null}
+                  value={moment(filters.endDate) }
                   onChange={(date) =>
                     setFilters({
                       ...filters,
-                      endDate: date ? date.format("YYYY-MM-DD") : null,
+                      endDate:  date.format("YYYY-MM-DD"),
                     })
                   }
                 />

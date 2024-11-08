@@ -9,6 +9,7 @@ import {
   DatePicker,
   Modal,
   Input,
+  Switch,
 } from "antd";
 import {
   AppstoreAddOutlined,
@@ -120,6 +121,18 @@ const ListeMission: React.FC = () => {
       },
     },
     {
+      title: "presence",
+      dataIndex: "presence",
+      key: "presence",
+      
+        render: (presence: boolean) => (
+          <span style={{ color: presence ? "green" : "red" }}>
+            {presence ? "Yes" : "No"}
+          </span>
+        ),
+      
+    },
+    {
       title: "Budget",
       dataIndex: "budget",
       key: "budget",
@@ -155,8 +168,8 @@ const ListeMission: React.FC = () => {
         const matchType = !filters.type || missionOrder.type === filters.type;
         const matchStatus =
           !filters.status || missionOrder.status === filters.status;
-          const matchDestination =
-          !filters.destination || missionOrder.destination=== filters.destination;
+          const matchPresence =
+          !filters.presence || missionOrder.presence=== filters.presence;
         const matchNom = !filters.nom || missionOrder.nom === filters.nom;
         const matchBudget =
           !filters.budget || missionOrder.budget === filters.budget;
@@ -177,7 +190,8 @@ const ListeMission: React.FC = () => {
           matchEndDate &&
           matchNom &&
           matchBudget &&
-          matchDestination
+          matchPresence
+
         );
       });
     setDataSource(filteredData);
@@ -297,16 +311,13 @@ const ListeMission: React.FC = () => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col xs={12} md={5}>
-              <Form.Item label="Budget">
-                <Input
-                 value={filters.budget}
-                style={{width:"100%"}}
-                  onChange={(value: any) =>
-                  {  setFilters({ ...filters, budget: value.target.value });console.log(value)}
-                  }
-                ></Input>
-                </Form.Item>
+            <Col xs={12} md={2}>
+              <Form.Item label="presence">
+              <Switch size="small" checked={filters.presence}
+                  onChange={(checked) =>
+                    setFilters({ ...filters, presence: checked })
+                  }/>
+              </Form.Item>
             </Col>
             
             <Col xs={24} md={8}>
@@ -335,19 +346,7 @@ const ListeMission: React.FC = () => {
              
             
             </Col>
-            <Col xs={12} md={5}>
-              
-              <Form.Item label="Destination">
-                <Input
-                 style={{width:"100%"}}
-                  value={filters.destination}
-                  onChange={(e) =>
-                    setFilters({ ...filters, destination: e.target.value })
-                  }
-                  placeholder="Enter destination"
-                />
-              </Form.Item>
-            </Col>
+           
             <Col xs={12} md={5}>
               <Form.Item label="Date début">
                 <DatePicker

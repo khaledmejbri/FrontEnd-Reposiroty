@@ -6,6 +6,9 @@ import MesPresences from "./MesPointages";
 import ListeDesConges from "./ListeDesConges";
 import ListeDesPresences from "./ListeDesPresences";
 import ListeMession from "./ListeDesMessions";
+import ConditionRules from "./Condition&Rules";
+import HistoriqueDesConges from "./HistoriqueDesConges";
+import ListDesEmployeer from "./ListDesEmployées";
 
 
 
@@ -24,20 +27,29 @@ const Conge: React.FC = () => {
         style={{ width: "100%",marginTop:"50px" }}
         tabPosition="left"
       >
-        <TabPane tab="Pointage des employers" key={1}>
+         <TabPane tab="List Des Employeer" key={1}>
+        <ListDesEmployeer/>
+        </TabPane>
+        <TabPane tab="Conditions" key={2}>
+        <ConditionRules/>
+        </TabPane>
+        <TabPane tab="Pointage des employers" key={3}>
         <ListeDesPresences/>
         </TabPane>
      
-        <TabPane tab="Congés des employers" key={2} >
+        <TabPane tab="Les Demandes des employers" key={4} >
         <ListeDesConges/>
         </TabPane>
-        <TabPane tab="Mes pointages" key={3} >
-        <MesPresences/>
+        <TabPane tab="Historique Des Congés" key={5} >
+        <HistoriqueDesConges/>
         </TabPane>
-        <TabPane tab="Mes congés" key={4} >
+        <TabPane tab="Mes pointages" key={6} >
+         <MesPresences/> 
+        </TabPane>
+        <TabPane tab="Mes congés" key={7} >
         <MesCongs/>
         </TabPane>
-        <TabPane tab="Order De Mession" key={5} >
+        <TabPane tab="Order De Mession" key={8} >
         <ListeMession/>
         </TabPane>
       </Tabs>

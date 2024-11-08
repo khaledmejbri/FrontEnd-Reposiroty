@@ -44,4 +44,6 @@ td.ant-table-cell {
   background-color: #9dc9ff69 !important;
 }
 
-
+.tableAnswers th.ant-table-cell {
+  width: 300px !important;
+}

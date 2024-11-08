@@ -6,9 +6,10 @@ import {
   Col,
   Row,
   Select,
-  DatePicker,
   Modal,
   Input,
+  Switch,
+  TimePicker,
 } from "antd";
 import {
   AppstoreAddOutlined,
@@ -17,57 +18,71 @@ import {
   
 } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
-import templatedata from "../../data/mesConge.json";
-import moment from "moment"; // For date filtering
+import templatedata from "../../data/Pointage.json";
 import Card from "antd/es/card/Card";
+import moment from "moment";
 
 interface ListePresenceinterface {
-  key: string;
-  id: number;
-  reference: string;
-  status: string; // "Ok" or "Ref"
-  type: string; // "Pay", "Mald", "Matr", "SanSold"
-  startDate: string;
-  endDate: string;
-  nom: string;
-  Prenom: string;
-  accessRight: string; // "RRH" or "CRH"
-  NumTel: string;
-  Presence:boolean
+  name:string;
+  employeeId: number;
+  date: string;
+  checkInTime: string | null;
+  checkOutTime: string | null;
+  totalHours: number | null;
+  isAbsent: boolean; 
+  overtimeHours: null,
+  breakMinutes: null,
+  shiftType: string,
+  location: string,
+  isRemote: boolean,
+  deviceId: null,
+  isLate: boolean,
+  remarks: string
 }
 
 const ListePresence: React.FC = () => {
   const [dataSource, setDataSource] = useState<ListePresenceinterface[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newEntry, setNewEntry] = useState<ListePresenceinterface>({
-    key: "",
-    id: 0,
-    reference: "",
-    status: "Ok", // Default status
-    type: "Pay", // Default type
-    startDate: "",
-    endDate: "",
-    nom: "",
-    Prenom: "",
-    accessRight: "", // Default access right
-    NumTel: "",
-    Presence:false
+  name:"",
+  employeeId: 0,
+  date: "",
+  checkInTime: "",
+  checkOutTime:"",
+  totalHours:0,
+  isAbsent: false,
+  overtimeHours: null,
+  breakMinutes: null,
+  shiftType: "",
+  location: "",
+  isRemote: false,
+  deviceId: null,
+  isLate: false,
+  remarks: ""
   });
   const [filters, setFilters] = useState({
-    nom:"",
-    reference: "",
-    type: "",
-    status: "",
-    startDate: null as string | null,
-    endDate: null as string | null,
-    Presence:false
+    name:"",
+    employeeId: 0,
+    date: "",
+    checkInTime: "",
+    checkOutTime:"",
+    totalHours:0,
+    isAbsent: false,
+    overtimeHours: null,
+    breakMinutes: null,
+    shiftType: "",
+    location: "",
+    isRemote: false,
+    deviceId: null,
+    isLate: false,
+    remarks: ""
   });
 
   useEffect(() => {
     // Initialize the data with keys
     const dataWithKeys = templatedata.map((leave) => ({
       ...leave,
-      key: leave.id.toString(),
+      key: leave.employeeId,
     }));
     setDataSource(dataWithKeys);
   }, []);
@@ -76,92 +91,83 @@ const ListePresence: React.FC = () => {
 
   const columns = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
-      title: "Reference",
-      dataIndex: "reference",
-      key: "reference",
+      title: "Id",
+      dataIndex: "employeeId",
+      key: "employeeId",
     },
     {
       title: "Nom",
-      dataIndex: "Nom",
-      key: "Nom",
+      dataIndex: "name",
+      key: "Name",
     },
     {
-      title: "Prenom",
-      dataIndex: "Prenom",
-      key: "Prenom",
+      title: "date",
+      dataIndex: "date",
+      key: "date",
+      
     },
     {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
-      render: (type: string) => {
-        const typeLabels: { [key: string]: string } = {
-          Pay: "Congé Payé",
-          Mald: "Congé Maladie",
-          Matr: "Congé Maternité",
-          SanSold: "Congé sans Solde",
-          Nonjustifier: "Non justifier",
-        };
-        return typeLabels[type] || type;
-      },
+      title: "checkInTime",
+      dataIndex: "checkInTime",
+      key: "checkInTime",
+      
+    },
+    {
+      title: "checkOutTime",
+      dataIndex: "checkOutTime",
+      key: "checkOutTime",
+      
+    },
+    {
+      title: "totalHours",
+      dataIndex: "totalHours",
+      key: "totalHours",
+      
+    },
+    {
+      title: "location",
+      dataIndex: "location",
+      key: "location",
+      
     },
     {
       title: "Presence",
-      dataIndex: "Presence",
-      key: "Presence",
-      render: (Presence: boolean) => {
+      dataIndex: "isAbsent",
+      key: "isAbsent",
+      render: (isAbsent: boolean) => {
         return (
-          <span style={Presence===true  ?{ color:  "green" }:{ color:  "red" }}>
-            {Presence===true ?"Present": "Abscent"}
+          <span style={isAbsent===false  ?{ color:  "green" }:{ color:  "red" }}>
+            {isAbsent===false ?"Present": "Abscent"}
           </span>
         );
       },
     },
     {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status: string) => {
-        const statusLabels: { [key: string]: string } = {
-          Ok: "Accepter",
-          Ref: "Refusé",
-          EnCours: "En Cours de traiter",
-          Nonjustifier: "Non justifier",
-        };
+      title: "isRemote",
+      dataIndex: "isRemote",
+      key: "isRemote",
+      render: (isRomote: boolean) => {
         return (
-          <span style={{ color: status === "Ok" ? "green" : "red" }}>
-            {statusLabels[status] || status}
+          <span style={isRomote===false  ?{ color:  "green" }:{ color:  "blue" }}>
+            {isRomote===false ?"": "Romote"}
           </span>
         );
       },
     },
     {
-      title: "Access Right",
-      dataIndex: "accessRight",
-      key: "accessRight",
-      render: (accessRight: string) =>
-        accessRight === "RRH" ? "Responsable RH" :accessRight==="Employee"? "Employee":"Collaborateur RH",
+      title: "Late",
+      dataIndex: "isLate",
+      key: "isLate",
+      render: (isLate: boolean) => {
+        return (
+          <span style={isLate===true  ?{ color:  "red" }:{ color:  "blue" }}>
+            {isLate===true ?"Is Late ": ""}
+          </span>
+        );
+      },
     },
-    {
-      title: "Numéro de Téléphone",
-      dataIndex: "NumTel",
-      key: "NumTel",
-    },
-    {
-      title: "Start Date",
-      dataIndex: "startDate",
-      key: "startDate",
-    },
-    {
-      title: "End Date",
-      dataIndex: "endDate",
-      key: "endDate",
-    },
+    
+    
 
    
   ];
@@ -171,25 +177,37 @@ const ListePresence: React.FC = () => {
     const filteredData = templatedata
       .map((leave) => ({
         ...leave,
-        key: leave.id.toString(),
+        key: leave.employeeId,
       }))
       .filter((leave) => {
-        const matchReference =
-          !filters.reference || leave.reference.includes(filters.reference);
-        const matchType = !filters.type || leave.type === filters.type;
-        const matchStatus = !filters.status || leave.status === filters.status;
-        const matchStartDate =
-          !filters.startDate ||
-          moment(leave.startDate).isSameOrAfter(moment(filters.startDate));
-        const matchEndDate =
-          !filters.endDate ||
-          moment(leave.endDate).isSameOrBefore(moment(filters.endDate));
-        return (
-          matchReference &&
-          matchType &&
-          matchStatus &&
-          matchStartDate &&
-          matchEndDate
+        const matchName = !filters.name || leave.name.includes(filters.name);
+        const matchIsAbsent = !filters.isAbsent || leave.isAbsent === filters.isAbsent;
+        const matchIsRemote = !filters.isRemote || leave.isRemote===filters.isRemote;
+        const matchIsLate = !filters.isLate || leave.isLate===filters.isLate;
+        const matchLocation = !filters.location || leave.location===filters.location;
+        const matchCheckInTime =
+          !filters.checkInTime ||
+          (leave.checkInTime &&
+            moment(leave.checkInTime, "HH:mm").isSame(
+              moment(filters.checkInTime, "HH:mm"),
+              "minute"
+            ));
+            const checkOutTime =
+          !filters.checkOutTime ||
+          (leave.checkOutTime &&
+            moment(leave.checkOutTime, "HH:mm").isSame(
+              moment(filters.checkOutTime, "HH:mm"),
+              "minute"
+            ));
+      return (
+          matchName &&
+          matchIsAbsent &&
+          matchIsRemote&&
+          matchIsLate&&
+          matchLocation&&
+          matchCheckInTime&&
+          checkOutTime
+         
         );
       });
     setDataSource(filteredData);
@@ -198,16 +216,24 @@ const ListePresence: React.FC = () => {
   // Clear filters and reset table
   const handleClearFilters = () => {
     setFilters({
-      nom:"",
-      reference: "",
-      type: "",
-      status: "",
-      startDate: null,
-      endDate: null,
-      Presence:false
+      name:"",
+      employeeId: 0,
+      date: "",
+      checkInTime: "",
+      checkOutTime:"",
+      totalHours:0,
+      isAbsent: false,
+      overtimeHours: null,
+      breakMinutes: null,
+      shiftType: "",
+      location: "",
+      isRemote: false,
+      deviceId: null,
+      isLate: false,
+      remarks: ""
     });
     setDataSource(
-      templatedata.map((leave) => ({ ...leave, key: leave.id.toString() }))
+      templatedata.map((leave) => ({ ...leave, key: leave.employeeId }))
     );
   };
 
@@ -228,18 +254,21 @@ const ListePresence: React.FC = () => {
     setDataSource([newData, ...dataSource]); // Add new entry to data source
     setIsModalVisible(false); // Close the modal
     setNewEntry({
-      key: "",
-      id: 0,
-      reference: "",
-      status: "Ok",
-      type: "Pay",
-      startDate: "",
-      endDate: "",
-      nom: "",
-      Prenom: "",
-      accessRight: "RRH",
-      NumTel: "",
-      Presence:false
+      name:"",
+      employeeId: 0,
+      date: "",
+      checkInTime: "",
+      checkOutTime:"",
+      totalHours:0,
+      isAbsent: false,
+      overtimeHours: null,
+      breakMinutes: null,
+      shiftType: "",
+      location: "",
+      isRemote: false,
+      deviceId: null,
+      isLate: false,
+      remarks: ""
     }); // Reset form data
   };
 
@@ -254,44 +283,55 @@ const ListePresence: React.FC = () => {
               </Title>
             </Col>
 
-            <Col xs={12} md={6}>
-              <Form.Item label="Référence">
-                <Input
-                  value={filters.reference}
-                  onChange={(e) =>
-                    setFilters({ ...filters, reference: e.target.value })
-                  }
-                  placeholder="Chercher par référence"
-                />
-              </Form.Item>
-            </Col>
             <Col xs={12} md={5}>
               <Form.Item label="Nom">
                 <Input
-                  value={filters.reference}
+                  value={filters.name}
                   onChange={(e) =>
-                    setFilters({ ...filters, nom: e.target.value })
+                    setFilters({ ...filters, name: e.target.value })
                   }
                   placeholder="Chercher par référence"
                 />
               </Form.Item>
             </Col>
             <Col xs={12} md={5}>
-              <Form.Item label="Type">
-                <Select
-                  value={filters.type}
-                  onChange={(value) => setFilters({ ...filters, type: value })}
-                >
-                  <Select.Option value="">Tous</Select.Option>
-                  <Select.Option value="Pay">Congé Payé</Select.Option>
-                  <Select.Option value="Mald">Congé Maladie</Select.Option>
-                  <Select.Option value="Matr">Congé Maternité</Select.Option>
-                  <Select.Option value="SanSold">
-                    Congé sans Solde
-                  </Select.Option>
-                </Select>
+              <Form.Item label="location">
+                <Input
+                  value={filters.location}
+                  onChange={(e) =>
+                    setFilters({ ...filters, location: e.target.value })
+                  }
+                  placeholder="Chercher par localisation"
+                />
               </Form.Item>
             </Col>
+            <Col xs={12} md={2}>
+              <Form.Item label="isAbsent">
+              <Switch size="small" checked={filters.isAbsent}
+                  onChange={(checked) =>
+                    setFilters({ ...filters, isAbsent: checked })
+                  }/>
+              </Form.Item>
+            </Col>
+            <Col xs={12} md={2}>
+              <Form.Item label="isRemote">
+              <Switch size="small" checked={filters.isRemote}
+                  onChange={(checked) =>
+                    setFilters({ ...filters, isRemote: checked })
+                  }/>
+              </Form.Item>
+            </Col>
+            <Col xs={12} md={2}>
+              <Form.Item label="isLate">
+              <Switch size="small" checked={filters.isLate}
+                  onChange={(checked) =>
+                    setFilters({ ...filters, isLate: checked })
+                  }/>
+              </Form.Item>
+            </Col>
+           
+           
+           
             <Col xs={24} md={8}>
             <Button type="primary"  onClick={showModal} style={{backgroundColor:'#79ba8a',marginRight:20,float:'right'}}>
             <AppstoreAddOutlined /> Add
@@ -318,56 +358,42 @@ const ListePresence: React.FC = () => {
              
             
             </Col>
+            <Col xs={12} md={5}>
+              <Form.Item label="checkInTime">
+              <TimePicker
+                  format="HH:mm"
+                  style={{ width: "100%" }}
+                  onChange={(time) =>
+                    setFilters({
+                      ...filters,
+                      checkInTime: time ? time.format("HH:mm") : "",
+                    })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={12} md={5}>
+              <Form.Item label="checkOutTime">
+              <TimePicker
+                  format="HH:mm"
+                  style={{ width: "100%" }}
+                  onChange={(time) =>
+                    setFilters({
+                      ...filters,
+                      checkOutTime: time ? time.format("HH:mm") : "",
+                    })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            
+            
+            
            
 
-            <Col xs={12} md={6}>
-              <Form.Item label="Status">
-                <Select
-                  value={filters.status}
-                  onChange={(value) =>
-                    setFilters({ ...filters, status: value })
-                  }
-                >
-                  <Select.Option value="">Tous</Select.Option>
-                  <Select.Option value="Ok">Accepter</Select.Option>
-                  <Select.Option value="EnCours">
-                    En Cours de traiter
-                  </Select.Option>
-                  <Select.Option value="Ref">Refusé</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
+          
           
 
-            <Col xs={12} md={5}>
-              <Form.Item label="De">
-                <DatePicker
-                  style={{ width: "100%" }}
-                  value={filters.startDate ? moment(filters.startDate) : null}
-                  onChange={(date) =>
-                    setFilters({
-                      ...filters,
-                      startDate: date ? date.format("YYYY-MM-DD") : null,
-                    })
-                  }
-                />
-              </Form.Item>
-            </Col>
-
-            <Col xs={12} md={5}>
-              <Form.Item label="À">
-                <DatePicker
-                  style={{ width: "100%" }}
-                  value={filters.endDate ? moment(filters.endDate) : null}
-                  onChange={(date) =>
-                    setFilters({
-                      ...filters,
-                      endDate: date ? date.format("YYYY-MM-DD") : null,
-                    })
-                  }
-                />
-              </Form.Item>
-            </Col>
 
           
 
@@ -388,62 +414,27 @@ const ListePresence: React.FC = () => {
           cancelText="Annuler"
         >
           <Form layout="vertical">
-            <Form.Item label="Référence">
-              <Input
-                value={newEntry.reference}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, reference: e.target.value })
-                }
-              />
-            </Form.Item>
+          
 
             <Form.Item label="Nom">
               <Input
-                value={newEntry.nom}
+                value={newEntry.name}
                 onChange={(e) =>
-                  setNewEntry({ ...newEntry, nom: e.target.value })
+                  setNewEntry({ ...newEntry, name: e.target.value })
                 }
               />
             </Form.Item>
 
-            <Form.Item label="Prenom">
-              <Input
-                value={newEntry.Prenom}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, Prenom: e.target.value })
-                }
-              />
-            </Form.Item>
+          
+           
 
-            <Form.Item label="Numéro de Téléphone">
-              <Input
-                value={newEntry.NumTel}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, NumTel: e.target.value })
-                }
-              />
-            </Form.Item>
+           
 
-            <Form.Item label="Type">
+            <Form.Item label="remarks">
               <Select
-                value={newEntry.type}
-                onChange={(value) => setNewEntry({ ...newEntry, type: value })}
-              >
-                <Select.Option value="Pay">Congé Payé</Select.Option>
-                <Select.Option value="Mald">Congé Maladie</Select.Option>
-                <Select.Option value="Matr">Congé Maternité</Select.Option>
-                <Select.Option value="SanSold">Congé sans Solde</Select.Option>
-                <Select.Option value="Nonjustifier">
-                  Non justifier
-                </Select.Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item label="Status">
-              <Select
-                value={newEntry.status}
+                value={newEntry.remarks}
                 onChange={(value) =>
-                  setNewEntry({ ...newEntry, status: value })
+                  setNewEntry({ ...newEntry, remarks: value })
                 }
               >
                 <Select.Option value="Ok">Accepter</Select.Option>
@@ -457,45 +448,10 @@ const ListePresence: React.FC = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item label="Access Right">
-              <Select
-                value={newEntry.accessRight}
-                onChange={(value) =>
-                  setNewEntry({ ...newEntry, accessRight: value })
-                }
-              >
-                <Select.Option value="RRH">Responsable RH</Select.Option>
-                <Select.Option value="CRH">Collaborateur RH</Select.Option>
-              </Select>
-            </Form.Item>
-
-            <Form.Item label="Start Date">
-              <DatePicker
-                style={{ width: "100%" }}
-                value={newEntry.startDate ? moment(newEntry.startDate) : null}
-                onChange={(date) =>
-                  setNewEntry({
-                    ...newEntry,
-                    startDate: date ? date.format("YYYY-MM-DD") : "",
-                  })
-                }
-              />
-            </Form.Item>
-
-            <Form.Item label="End Date">
-              <DatePicker
-                style={{ width: "100%" }}
-                value={newEntry.endDate ? moment(newEntry.endDate) : null}
-                onChange={(date) =>
-                  setNewEntry({
-                    ...newEntry,
-                    endDate: date ? date.format("YYYY-MM-DD") : "",
-                  })
-                }
-              />
-            </Form.Item>
+        
           </Form>
         </Modal>
+      
       </Card>
     </>
   );

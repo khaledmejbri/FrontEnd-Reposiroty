@@ -12,7 +12,6 @@ import {
   Space,
 } from "antd";
 import {
-  AppstoreAddOutlined,
   CheckCircleOutlined,
   ClearOutlined,
   CloseCircleOutlined,
@@ -25,7 +24,7 @@ import templatedata from "../../data/ListConge.json";
 import moment from "moment"; 
 import Card from "antd/es/card/Card";
 
-interface ListeCongé {
+interface HistoriqueDesCongesInterface {
   id: string;
   status: string; // "EnCours", "Approved", "Refused"
   type: string; // "Pay", "Unpaid", "Medical", etc.
@@ -36,10 +35,10 @@ interface ListeCongé {
   daysTaken: number; // totalDaysPerYear - soldeConge
 }
 
-const ListeDesConges: React.FC = () => {
-  const [dataSource, setDataSource] = useState<ListeCongé[]>([]);
+const HistoriqueDesConges: React.FC = () => {
+  const [dataSource, setDataSource] = useState<HistoriqueDesCongesInterface[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [newEntry, setNewEntry] = useState<ListeCongé>({
+  const [newEntry, setNewEntry] = useState<HistoriqueDesCongesInterface>({
     id: "",
     status: "", 
     type: "", 
@@ -63,7 +62,7 @@ const ListeDesConges: React.FC = () => {
   useEffect(() => {
     // Initialize the data with keys
     const dataWithKeys = templatedata
-    .filter((leave) => leave.status === "EnCours")
+    .filter((leave) => leave.status !== "EnCours")
     .map((leave) => ({
       ...leave,
       key: leave.id.toString(),
@@ -87,7 +86,42 @@ const ListeDesConges: React.FC = () => {
       dataIndex: "nom",
       key: "nom",
     },
+    {
+      title: "totalDaysPerYear",
+      dataIndex: "totalDaysPerYear",
+      key: "totalDaysPerYear",
+    },
+    {
+      title: "daysTaken",
+      dataIndex: "daysTaken",
+      key: "daysTaken",
+    }, {
+      title: "daysTaken",
+      dataIndex: "daysTaken",
+      key: "daysTaken",
+    },
+    {
+      title: "soldeConge",
+      dataIndex: "soldeConge",
+      key: "soldeConge",
+    },
    
+   
+    {
+      title: "Type",
+      dataIndex: "type",
+      key: "type",
+      render: (type: string) => {
+        const typeLabels: { [key: string]: string } = {
+          Pay: "Congé Payé",
+          Mald: "Congé Maladie",
+          Matr: "Congé Maternité",
+          SanSold: "Congé sans Solde",
+          Nonjustifier: "Non justifier",
+        };
+        return typeLabels[type] || type;
+      },
+    },
     {
       title: "Status",
       dataIndex: "status",
@@ -119,7 +153,7 @@ const ListeDesConges: React.FC = () => {
     {
       title: "Action",
       key: "action",
-      render: (_: any, record: ListeCongé) => {
+      render: (_: any, record: HistoriqueDesCongesInterface) => {
         if (record.status === "EnCours") {
           return (
             <Space align="start">
@@ -206,10 +240,7 @@ const ListeDesConges: React.FC = () => {
     );
   };
 
-  // Open modal to add new entry
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+
 
   // Handle form submission in the modal
   const handleAddEntry = () => {
@@ -239,7 +270,7 @@ const ListeDesConges: React.FC = () => {
           <Row gutter={16}>
             <Col xs={24}>
               <Title level={4} style={{ marginBottom: 20, color: "#214f87" }}>
-                 Liste de Congés des employers
+              Historique Des Conges des employers
               </Title>
             </Col>
 
@@ -292,9 +323,7 @@ const ListeDesConges: React.FC = () => {
               </Form.Item>
             </Col>
             <Col xs={24} md={8}>
-            <Button type="primary"  onClick={showModal} style={{backgroundColor:'#79ba8a',marginRight:20,float:'right'}}>
-            <AppstoreAddOutlined /> Add
-            </Button>
+           
               <Button
                 type="primary"
                 onClick={handleSearch}
@@ -464,4 +493,4 @@ const ListeDesConges: React.FC = () => {
   );
 };
 
-export default ListeDesConges;
+export default HistoriqueDesConges;

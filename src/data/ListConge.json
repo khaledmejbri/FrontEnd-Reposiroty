@@ -1,0 +1,167 @@
+[
+    {
+        "id": "1",
+        "status": "EnCours",
+        "type": "Pay",
+        "startDate": "2024-09-15",
+        "endDate": "2024-09-25",
+        "soldeConge": 20,
+        "totalDaysPerYear": 22,
+        "daysTaken": 2,
+        "nom": "Smith"
+    },
+    {
+        "id": "2",
+        "status": "Approved",
+        "type": "Unpaid",
+        "startDate": "2024-10-01",
+        "endDate": "2024-10-05",
+        "soldeConge": 18,
+        "totalDaysPerYear": 22,
+        "daysTaken": 4,
+        "nom": "Johnson"
+    },
+    {
+        "id": "3",
+        "status": "Refused",
+        "type": "Medical",
+        "startDate": "2024-11-10",
+        "endDate": "2024-11-15",
+        "soldeConge": 16,
+        "totalDaysPerYear": 22,
+        "daysTaken": 6,
+        "nom": "Williams"
+    },
+    {
+        "id": "4",
+        "status": "EnCours",
+        "type": "Pay",
+        "startDate": "2024-12-01",
+        "endDate": "2024-12-10",
+        "soldeConge": 14,
+        "totalDaysPerYear": 22,
+        "daysTaken": 8,
+        "nom": "Brown"
+    },
+    {
+        "id": "5",
+        "status": "Approved",
+        "type": "Pay",
+        "startDate": "2025-01-15",
+        "endDate": "2025-01-25",
+        "soldeConge": 12,
+        "totalDaysPerYear": 22,
+        "daysTaken": 10,
+        "nom": "Jones"
+    },
+    {
+        "id": "6",
+        "status": "Approved",
+        "type": "Unpaid",
+        "startDate": "2025-02-01",
+        "endDate": "2025-02-05",
+        "soldeConge": 11,
+        "totalDaysPerYear": 22,
+        "daysTaken": 11,
+        "nom": "Garcia"
+    },
+    {
+        "id": "7",
+        "status": "Refused",
+        "type": "Maternity",
+        "startDate": "2025-03-10",
+        "endDate": "2025-03-20",
+        "soldeConge": 9,
+        "totalDaysPerYear": 22,
+        "daysTaken": 13,
+        "nom": "Miller"
+    },
+    {
+        "id": "8",
+        "status": "EnCours",
+        "type": "Sick",
+        "startDate": "2025-04-12",
+        "endDate": "2025-04-18",
+        "soldeConge": 8,
+        "totalDaysPerYear": 22,
+        "daysTaken": 14,
+        "nom": "Davis"
+    },
+    {
+        "id": "9",
+        "status": "Approved",
+        "type": "Vacation",
+        "startDate": "2025-05-15",
+        "endDate": "2025-05-20",
+        "soldeConge": 6,
+        "totalDaysPerYear": 22,
+        "daysTaken": 16,
+        "nom": "Martinez"
+    },
+    {
+        "id": "10",
+        "status": "EnCours",
+        "type": "Family",
+        "startDate": "2025-06-01",
+        "endDate": "2025-06-05",
+        "soldeConge": 4,
+        "totalDaysPerYear": 22,
+        "daysTaken": 18,
+        "nom": "Rodriguez"
+    },
+    {
+        "id": "11",
+        "status": "Approved",
+        "type": "Personal",
+        "startDate": "2025-07-10",
+        "endDate": "2025-07-15",
+        "soldeConge": 3,
+        "totalDaysPerYear": 22,
+        "daysTaken": 19,
+        "nom": "Martinez"
+    },
+    {
+        "id": "12",
+        "status": "Refused",
+        "type": "Vacation",
+        "startDate": "2025-08-05",
+        "endDate": "2025-08-10",
+        "soldeConge": 3,
+        "totalDaysPerYear": 22,
+        "daysTaken": 19,
+        "nom": "Hernandez"
+    },
+    {
+        "id": "13",
+        "status": "EnCours",
+        "type": "Sick",
+        "startDate": "2025-09-15",
+        "endDate": "2025-09-18",
+        "soldeConge": 2,
+        "totalDaysPerYear": 22,
+        "daysTaken": 20,
+        "nom": "Lopez"
+    },
+    {
+        "id": "14",
+        "status": "Approved",
+        "type": "Pay",
+        "startDate": "2025-10-01",
+        "endDate": "2025-10-05",
+        "soldeConge": 1,
+        "totalDaysPerYear": 22,
+        "daysTaken": 21,
+        "nom": "Gonzalez"
+    },
+    {
+        "id": "15",
+        "status": "EnCours",
+        "type": "Family",
+        "startDate": "2025-11-01",
+        "endDate": "2025-11-03",
+        "soldeConge": 0,
+        "totalDaysPerYear": 22,
+        "daysTaken": 22,
+        "nom": "Perez"
+    }
+]

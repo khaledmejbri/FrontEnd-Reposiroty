@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "ruleName": "MAX_DAYS_PER_YEAR",
+    "description": "Rules governing annual leave usage",
+    "maxDaysPerYear": 30,
+    "minDaysPerRequest": 1,
+    "allowCarryForward": true,
+    "maxCarryForwardDays": 10,
+    "noticePeriod": 7
+  },
+  {
+    "id": 2,
+    "ruleName": "Sick Leave Policy",
+    "description": "Rules governing sick leave usage",
+    "maxDaysPerYear": 15,
+    "minDaysPerRequest": 1,
+    "allowCarryForward": false,
+    "maxCarryForwardDays": 0,
+    "noticePeriod": 1
+  },
+  {
+    "id": 3,
+    "ruleName": "Maternity Leave Policy",
+    "description": "Rules for maternity leave",
+    "maxDaysPerYear": 120,
+    "minDaysPerRequest": 30,
+    "allowCarryForward": false,
+    "maxCarryForwardDays": 0,
+    "noticePeriod": 30
+  },
+  {
+    "id": 4,
+    "ruleName": "Paternity Leave Policy",
+    "description": "Rules for paternity leave",
+    "maxDaysPerYear": 10,
+    "minDaysPerRequest": 1,
+    "allowCarryForward": false,
+    "maxCarryForwardDays": 0,
+    "noticePeriod": 7
+  },
+  {
+    "id": 5,
+    "ruleName": "Special Leave Policy",
+    "description": "Special leave for personal or emergency situations",
+    "maxDaysPerYear": 5,
+    "minDaysPerRequest": 1,
+    "allowCarryForward": false,
+    "maxCarryForwardDays": 0,
+    "noticePeriod": 3
+  }
+]
