@@ -1,5 +1,120 @@
 const templatedata =
 
-"<!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\r\n    <title>Richard Sanchez - CV</title>\r\n    <style>\r\n        /* Add your CSS styles here */\r\n        body {\r\n            font-family: Arial, sans-serif;\r\n            margin: 0;\r\n            padding: 0;\r\n            color: #333;\r\n        }\r\n\r\n        .container {\r\n            width: 100%;\r\n            margin: 0 auto;\r\n            padding: 30px;\r\n            display: flex;\r\n            flex-wrap: wrap;\r\n        }\r\n\r\n        .column {\r\n            flex: 1;\r\n            padding: 10px;\r\n        }\r\n\r\n        h1, h2, h3 {\r\n            margin: 0;\r\n            padding: 0;\r\n        }\r\n\r\n        h1 {\r\n            font-size: 2em;\r\n            text-align: left;\r\n            color:#006f4e;\r\n        }\r\n\r\n        h2 {\r\n            font-size: 1.5em;\r\n            text-align: left;\r\n            margin-top: 10px;\r\n            color:#039a6d;\r\n        }\r\n\r\n        h3 {\r\n            font-size: 1.2em;\r\n            margin-bottom: 10px;\r\n            color:#006f4e;\r\n        }\r\n\r\n        /* Section styles */\r\n        .section {\r\n            margin-bottom: 20px;\r\n        }\r\n\r\n        .contact-info,\r\n        .skills,\r\n        .languages {\r\n            list-style: none;\r\n            padding: 0;\r\n        }\r\n\r\n        .contact-info p,\r\n        .skills li,\r\n        .languages li {\r\n            margin-bottom: 5px;\r\n        }\r\n\r\n        .work-experience ul,\r\n        .education ul {\r\n            margin: 0;\r\n            padding: 0;\r\n        }\r\n\r\n        .work-experience li,\r\n        .education li {\r\n            margin-bottom: 15px;\r\n            padding-bottom: 10px;\r\n            border-bottom: 1px dashed #ddd;\r\n        }\r\n\r\n        .work-experience h4,\r\n        .education h4 {\r\n            margin-bottom: 5px;\r\n        }\r\n        .photo img {\r\n            width:200px;\r\n        }\r\n    </style>\r\n</head>\r\n<body>\r\n    <div class=\"container\">\r\n        <div class=\"column\">\r\n            <div class=\"photo\">\r\n    <img  src=\"https://img.freepik.com/photos-gratuite/beau-mec-barbu-posant-contre-mur-blanc_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.2113030492.1720310400&semt=sph\" alt=\"Richard Sanchez Photo\">\r\n</div>\r\n            <div class=\"section\">\r\n                <h1>Richard Sanchez</h1>\r\n                <h2>Marketing Manager</h2>\r\n            </div>\r\n            <div class=\"section contact-info\">\r\n                <h3>Contact Information</h3>\r\n                <p>+123-456-7890</p>\r\n                <p>hello@reallygreatsite.com</p>\r\n                <p>123 Anywhere St., Any City</p>\r\n                <p>www.reallygreatsite.com</p>\r\n            </div>\r\n            <div class=\"section skills\">\r\n                <h3>Skills</h3>\r\n                <ul>\r\n                    <li>Marketing Strategy</li>\r\n                    <li>Campaign Management</li>\r\n                    <li>Content Marketing</li>\r\n                    <li>Social Media Marketing</li>\r\n                    <li>SEO/SEM</li>\r\n                    <li>Email Marketing</li>\r\n                    <li>Project Management</li>\r\n                    <li>Team Leadership</li>\r\n                    <li>Data Analysis</li>\r\n                </ul>\r\n            </div>\r\n            <div class=\"section languages\">\r\n                <h3>Languages</h3>\r\n                <ul>\r\n                    <li>English (Fluent)</li>\r\n                    <li>Spanish (Conversational)</li>\r\n                </ul>\r\n            </div>\r\n        </div>\r\n        <div class=\"column\">\r\n            <div class=\"section summary\">\r\n                <h3>Summary</h3>\r\n                <p>Highly motivated and results-oriented marketing manager with X years of experience in developing and executing successful marketing campaigns. Proven ability to lead and manage high-performing teams, fostering a collaborative and results-driven work environment. Skilled in various marketing strategies and tactics, including SEO/SEM, social media marketing, and content marketing.</p>\r\n            </div>\r\n            <div class=\"section work-experience\">\r\n                <h3>Work Experience</h3>\r\n                <ul>\r\n                    <li>\r\n                        <h4>Borcelle Studio (2030 - Present)</h4>\r\n                        <p>Marketing Manager & Specialist</p>\r\n                        <ul>\r\n                                                   <li>Develop and execute comprehensive marketing strategies and campaigns that align with the company's goals and objectives.</li>\r\n                        <li>Lead, mentor, and manage a high performing marketing team, fostering a collaborative and results-driven work environment.</li>\r\n                        <li>Monitor brand consistency across marketing channels and materials.</li>\r\n                    </ul>\r\n                </li>\r\n                <li>\r\n                    <h4>Fauget Studio (2025-2029)</h4>\r\n                    <p>Marketing Manager & Specialist</p>\r\n                    <ul>\r\n                        <li>Create and manage the marketing budget, ensuring efficient allocation of resources and optimizing ROL.</li>\r\n                        <li>Oversee market research to identify emerging trends, customer needs, and competitor strategies.</li>\r\n                        <li>Develop and maintain strong relationships with partners, agencies, and vendors to support marketing initiatives.</li>\r\n                        <li>Monitor and maintain brand consistency across marketing channels and materials.</li>\r\n                    </ul>\r\n                </li>\r\n            </ul>\r\n        </div>\r\n        <div class=\"column\">\r\n            <div class=\"section education\">\r\n                <h3>Education</h3>\r\n                <ul>\r\n                    <li>\r\n                        <h4>Master of Business Administration (MBA) - Marketing</h4>\r\n                        <p>Springfield University (2023)</p>\r\n                    </li>\r\n                    <li>\r\n                        <h4>Bachelor of Arts (BA) - Communication</h4>\r\n                        <p>Springfield University (2020)</p>\r\n                    </li>\r\n                </ul>\r\n            </div>\r\n            </div>\r\n    </div>\r\n</body>\r\n</html>\r\n\r\n"
-
+`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khaled Mejri - CV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 30px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .column {
+            flex: 1;
+            padding: 10px;
+        }
+        h1, h2, h3 {
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 2em;
+            color: #006f4e;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 10px;
+            color: #039a6d;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #006f4e;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .contact-info p {
+            margin-bottom: 5px;
+        }
+        .work-experience ul, .education ul {
+            margin: 0;
+            padding: 0;
+        }
+        .work-experience li, .education li {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .photo img {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="column">
+            <div class="photo">
+                <img src="https://img.freepik.com/photos-gratuite/beau-mec-barbu-posant-contre-mur-blanc_273609-20597.jpg?size=626&ext=jpg&ga=GA1.1.2113030492.1720310400&semt=sph" alt="Khaled Mejri Photo">
+            </div>
+            <div class="section">
+                <h1>Khaled Mejri</h1>
+                <h2>Ingénieur Informatique</h2>
+            </div>
+            <div class="section contact-info">
+                <h3>Contact Information</h3>
+                <p>+21612345678</p>
+                <p>khaled.mejbri@gmail.com</p>
+                <p>Rue de la Liberté, Tunis</p>
+            </div>
+        </div>
+        <div class="column">
+            <div class="section work-experience">
+                <h3>Professional Experiences</h3>
+                <ul>
+                    <li>
+                        <h4>Teamwill</h4>
+                        <p>Développeur Java - Duration: 4 years</p>
+                    </li>
+                    <li>
+                        <h4>help group</h4>
+                        <p>Développeur full stack - Duration: 1 year</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="section education">
+                <h3>Education</h3>
+                <ul>
+                    <li>
+                        <h4>Université de Tunis</h4>
+                        <p>June 15, 2016 - Mention: Très Bien</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="section stages">
+                <h3>Internships</h3>
+                <ul>
+                    <li>
+                        <h4>Digital factory</h4>
+                        <p>Développement Web - Duration: 0.5 month(s)</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+`
 export default templatedata;

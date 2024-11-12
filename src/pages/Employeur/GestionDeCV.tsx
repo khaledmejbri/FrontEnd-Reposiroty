@@ -16,48 +16,35 @@ import {
 } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 import moment from "moment";
-import templatedata from "../../data/GeneralData.json";
+import employeData from "../../data/employes.json";
 import { Link, useNavigate } from "react-router-dom";
 
-interface GestionCVInterface {
+interface EmployeInterface {
   key: string;
-  id: number;
   reference: string;
   nom: string;
   prenom: string;
-  stage: string;
-  entreprise: string;
-  poste: string;
-  diplome: string;
-  etablissement: string;
-  dateobtenation: string;
-  niveau: string;
-  description: string;
-  duree: string;
-  horaires: string;
-  placement: string;
-  theme: string;
-  titre: string;
-  nomFormation: string;
-  niveauFR: string;
-  niveauEN: string;
+  situationFamiliale: string;
+  nationalite: string;
+  dateNaissance: string;
+  cin: string;
+  tel: string;
+  adresseOfficielle: string;
+  email: string;
+  profession: string;
 }
 
 const GestionCV: React.FC = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [dataSource, setDataSource] = useState<GestionCVInterface[]>([]);
-
+  const navigate = useNavigate();
+  const [dataSource, setDataSource] = useState<EmployeInterface[]>([]);
 
   const [filters, setFilters] = useState({
     reference: "",
-    poste: "",
-    stage: "",
-    startDate: null as moment.Moment | null,
-    endDate: null as moment.Moment | null,
     nom: "",
-    placement: "",
-    diplome: "",
-    entreprise:""
+    prenom: "",
+    situationFamiliale: "",
+    profession: "",
+    nationalite: "",
   });
 
   const columns = [
@@ -65,8 +52,8 @@ const GestionCV: React.FC = () => {
       title: "Référence",
       dataIndex: "reference",
       key: "reference",
-      render: (text: string, record: GestionCVInterface) => (
-        <Link to={`/documents/gestionCV/details/${record.id}`}>{text}</Link>
+      render: (text: string, record: EmployeInterface) => (
+        <Link to={`/documents/gestionCV/details/${record.reference}`}>{text}</Link>
       ),
     },
     {
@@ -80,98 +67,76 @@ const GestionCV: React.FC = () => {
       key: "prenom",
     },
     {
-      title: "Poste",
-      dataIndex: "poste",
-      key: "poste",
+      title: "Profession",
+      dataIndex: "profession",
+      key: "profession",
     },
     {
-      title: "Entreprise",
-      dataIndex: "entreprise",
-      key: "entreprise",
+      title: "Nationalité",
+      dataIndex: "nationalite",
+      key: "nationalite",
     },
     {
-      title: "Stage",
-      dataIndex: "stage",
-      key: "stage",
-    },
-    {
-      title: "Diplome",
-      dataIndex: "diplome",
-      key: "diplome",
+      title: "Situation Familiale",
+      dataIndex: "situationFamiliale",
+      key: "situationFamiliale",
     },
   ];
 
   const handleSearch = () => {
-  const filteredData = templatedata
-    .map((missionOrder) => ({
-      ...missionOrder,
-      key: missionOrder.id.toString(),
-      Horaires: missionOrder.horaires || "", // Ensure Horaires is set
-      NiveauFR: missionOrder.niveauFR || "", // Ensure NiveauFR is set
-      NiveauEN: missionOrder.niveauEN || "", // Ensure NiveauEN is set
-    }))
-    .filter((missionOrder) => {
-      const matchReference =
-        !filters.reference ||
-        missionOrder.reference.includes(filters.reference);
-      const matchposte =
-        !filters.poste || missionOrder.poste === filters.poste;
-      const matchstage =
-        !filters.stage || missionOrder.stage === filters.stage;
-      const matchdiplome =
-        !filters.diplome || missionOrder.diplome === filters.diplome;
-      const matchNom = !filters.nom || missionOrder.nom === filters.nom;
-      const matchplacement =
-        !filters.placement || missionOrder.placement === filters.placement;
-      return (
-        matchReference &&
-        matchposte &&
-        matchstage &&
-        matchNom &&
-        matchplacement &&
-        matchdiplome
-      );
-    });
-  setDataSource(filteredData);
-};
+    const filteredData = employeData
+      .map((employe) => ({
+        ...employe,
+        key: employe.reference,
+      }))
+      .filter((employe) => {
+        const matchReference =
+          !filters.reference || employe.reference.includes(filters.reference);
+        const matchNom = !filters.nom || employe.nom.includes(filters.nom);
+        const matchPrenom = !filters.prenom || employe.prenom.includes(filters.prenom);
+        const matchProfession =
+          !filters.profession || employe.profession.includes(filters.profession);
+        const matchNationalite =
+          !filters.nationalite || employe.nationalite.includes(filters.nationalite);
+        const matchSituationFamiliale =
+          !filters.situationFamiliale || employe.situationFamiliale === filters.situationFamiliale;
+        return (
+          matchReference &&
+          matchNom &&
+          matchPrenom &&
+          matchProfession &&
+          matchNationalite &&
+          matchSituationFamiliale
+        );
+      });
+    setDataSource(filteredData);
+  };
+
   const handleClearFilters = () => {
-  setFilters({
-    reference: "",
-    poste: "",
-    stage: "",
-    startDate: null,
-    endDate: null,
-    nom: "",
-    placement: "",
-    diplome: "",
-    entreprise: ""
-  });
-  setDataSource(
-    templatedata.map((missionOrder) => ({
-      ...missionOrder,
-      key: missionOrder.id.toString(),
-      horaires: missionOrder.horaires || "", 
-      niveauFR: missionOrder.niveauFR || "", 
-      niveauEN: missionOrder.niveauEN || "", 
-    }))
-  );
-};
-
-
- 
-
+    setFilters({
+      reference: "",
+      nom: "",
+      prenom: "",
+      situationFamiliale: "",
+      profession: "",
+      nationalite: "",
+    });
+    setDataSource(
+      employeData.map((employe) => ({
+        ...employe,
+        key: employe.reference,
+      }))
+    );
+  };
 
   useEffect(() => {
-  setDataSource(
-    templatedata.map((missionOrder) => ({
-      ...missionOrder,
-      key: missionOrder.id.toString(),
-      horaires: missionOrder.horaires || "", // Ensure Horaires is set
-      niveauFR: missionOrder.niveauFR || "", // Ensure NiveauFR is set
-      niveauEN: missionOrder.niveauEN || "", // Ensure NiveauEN is set
-    }))
-  );
-}, []);
+    setDataSource(
+      employeData.map((employe) => ({
+        ...employe,
+        key: employe.reference,
+      }))
+    );
+  }, []);
 
   return (
     <>
@@ -180,7 +145,7 @@ const GestionCV: React.FC = () => {
           <Row gutter={16}>
             <Col xs={24}>
               <Title level={4} style={{ marginBottom: 20, color: "#214f87" }}>
-                Liste des CVs
+                Liste des Employés
               </Title>
             </Col>
 
@@ -194,7 +159,7 @@ const GestionCV: React.FC = () => {
                   optionFilterProp="children"
                 >
                   {dataSource.map((item) => (
-                    <Select.Option key={item.id} value={item.nom}>
+                    <Select.Option key={item.reference} value={item.nom}>
                       {item.nom}
                     </Select.Option>
                   ))}
@@ -202,33 +167,35 @@ const GestionCV: React.FC = () => {
               </Form.Item>
             </Col>
             <Col xs={12} md={5}>
-              <Form.Item label="Poste">
+              <Form.Item label="Profession">
                 <Select
-                  value={filters.poste}
-                  onChange={(value) => setFilters({ ...filters, poste: value })}
+                  value={filters.profession}
+                  onChange={(value) => setFilters({ ...filters, profession: value })}
                 >
                   <Select.Option value="">Tous</Select.Option>
-                  <Select.Option value="Développeur stagiaire">
-                    Développeur stagiaire
+                  <Select.Option value="Ingénieur Informatique">
+                    Ingénieur Informatique
                   </Select.Option>
-                  <Select.Option value="Chef de projet">
-                    Chef de projet
+                  <Select.Option value="Data Analyst">
+                    Data Analyst
                   </Select.Option>
-                  <Select.Option value="Développeur Web Junior">
-                    Développeur Web Junior
+                  <Select.Option value="Chef de Projet">
+                    Chef de Projet
                   </Select.Option>
-                  <Select.Option value="Analyste">Analyste</Select.Option>
-                
+                  <Select.Option value="Responsable RH">
+                    Responsable RH
+                  </Select.Option>
                 </Select>
               </Form.Item>
             </Col>
             <Col xs={12} md={5}>
-              <Form.Item label="entreprise">
+              <Form.Item label="Nationalité">
                 <Input
-                  value={filters.entreprise}
+                  value={filters.nationalite}
                   onChange={(e) =>
-                    setFilters({ ...filters, entreprise: e.target.value })
+                    setFilters({ ...filters, nationalite: e.target.value })
                   }
+                  placeholder="Entrer nationalité"
                 />
               </Form.Item>
             </Col>
@@ -269,14 +236,17 @@ const GestionCV: React.FC = () => {
               </Button>
             </Col>
             <Col xs={12} md={5}>
-              <Form.Item label="diplome">
-                <Input
-                  value={filters.diplome}
-                  onChange={(e) =>
-                    setFilters({ ...filters, diplome: e.target.value })
-                  }
-                  placeholder="Entrer diplome"
-                />
+              <Form.Item label="Situation Familiale">
+                <Select
+                  value={filters.situationFamiliale}
+                  onChange={(value) => setFilters({ ...filters, situationFamiliale: value })}
+                  placeholder="Sélectionner situation familiale"
+                >
+                  <Select.Option value="">Tous</Select.Option>
+                  <Select.Option value="Marié">Marié</Select.Option>
+                  <Select.Option value="Célibataire">Célibataire</Select.Option>
+                  <Select.Option value="Divorcé">Divorcé</Select.Option>
+                </Select>
               </Form.Item>
             </Col>
           </Row>
@@ -287,8 +257,6 @@ const GestionCV: React.FC = () => {
         dataSource={dataSource}
         pagination={{ pageSize: 5 }}
       />
-
-     
     </>
   );
 };

@@ -1,0 +1,39 @@
+{
+    "reference": "REF456",
+    "nom": "Mejbri",
+    "prenom": "Khaled",
+    "situationFamiliale": "Marié",
+    "nationalite": "Tunisien",
+    "dateNaissance": "1995-07-02",
+    "cin": "87654321",
+    "tel": "+21612345678",
+    "adresseOfficielle": "Rue de la Liberté, Tunis",
+    "email": "khaled.mejbri@gmail.com",
+    "profession": "Ingénieur Informatique",
+    "diplomes": [
+        {
+            "etablissement": "Université de Tunis",
+            "dateObtention": "2016-06-15",
+            "mention": "Très Bien"
+        }
+    ],
+    "experiencesProfessionnelles": [
+        {
+            "poste": "Développeur Java",
+            "duree": 4,
+            "entreprise": "Teamwill"
+        },
+        {
+            "poste": "Développeur full stack",
+            "duree": 1,
+            "entreprise": "help group"
+        }
+    ],
+    "stages": [
+        {
+            "intitule": "Développement Web",
+            "duree": 0.5,
+            "entreprise": "Digital factory"
+        }
+    ]
+}

@@ -38,6 +38,7 @@ interface ListePresenceinterface {
   deviceId: null,
   isLate: boolean,
   remarks: string
+  password?:string
 }
 
 const ListePresence: React.FC = () => {
@@ -279,7 +280,7 @@ const ListePresence: React.FC = () => {
           <Row gutter={16}>
             <Col xs={24}>
               <Title level={4} style={{ marginBottom: 20, color: "#214f87" }}>
-              Liste de présence des employers
+              Liste de présence des employés
               </Title>
             </Col>
 
@@ -334,7 +335,7 @@ const ListePresence: React.FC = () => {
            
             <Col xs={24} md={8}>
             <Button type="primary"  onClick={showModal} style={{backgroundColor:'#79ba8a',marginRight:20,float:'right'}}>
-            <AppstoreAddOutlined /> Add
+            <AppstoreAddOutlined /> Importer csv
             </Button>
               <Button
                 type="primary"
@@ -406,17 +407,17 @@ const ListePresence: React.FC = () => {
         <Table dataSource={dataSource} columns={columns} />
 
         <Modal
-          title="Ajouter un Congé"
+          title="Importer pointage"
           visible={isModalVisible}
           onOk={handleAddEntry}
           onCancel={() => setIsModalVisible(false)}
-          okText="Ajouter"
+          okText="se connecter"
           cancelText="Annuler"
         >
           <Form layout="vertical">
           
 
-            <Form.Item label="Nom">
+            <Form.Item label="server User Name">
               <Input
                 value={newEntry.name}
                 onChange={(e) =>
@@ -430,22 +431,14 @@ const ListePresence: React.FC = () => {
 
            
 
-            <Form.Item label="remarks">
-              <Select
-                value={newEntry.remarks}
-                onChange={(value) =>
-                  setNewEntry({ ...newEntry, remarks: value })
+            <Form.Item label="server Password">
+            <Input
+                value={newEntry.password}
+                type="password"
+                onChange={(e) =>
+                  setNewEntry({ ...newEntry, password: e.target.value })
                 }
-              >
-                <Select.Option value="Ok">Accepter</Select.Option>
-                <Select.Option value="EnCours">
-                  En Cours de traiter
-                </Select.Option>
-                <Select.Option value="Ref">Refusé</Select.Option>
-                <Select.Option value="Nonjustifier">
-                  Non justifier
-                </Select.Option>
-              </Select>
+              />
             </Form.Item>
 
         

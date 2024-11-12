@@ -1,0 +1,211 @@
+[
+    {
+        "reference": "REF456",
+        "nom": "Mejbri",
+        "prenom": "Khaled",
+        "situationFamiliale": "Marié",
+        "nationalite": "Tunisien",
+        "dateNaissance": "1995-07-02",
+        "cin": "87654321",
+        "tel": "+21612345678",
+        "adresseOfficielle": "Rue de la Liberté, Tunis",
+        "email": "khaled.mejbri@gmail.com",
+        "profession": "Ingénieur Informatique",
+        "diplomes": [
+            {
+                "etablissement": "Université de Tunis",
+                "dateObtention": "2016-06-15",
+                "mention": "Très Bien"
+            }
+        ],
+        "experiencesProfessionnelles": [
+            {
+                "poste": "Développeur Java",
+                "duree": 4,
+                "entreprise": "Teamwill"
+            },
+            {
+                "poste": "Développeur full stack",
+                "duree": 1,
+                "entreprise": "help group"
+            }
+        ],
+        "stages": [
+            {
+                "intitule": "Développement Web",
+                "duree": 0.5,
+                "entreprise": "Digital factory"
+            }
+        ]
+    },
+    {
+        "reference": "REF789",
+        "nom": "Ahmed",
+        "prenom": "Cherif",
+        "situationFamiliale": "Célibataire",
+        "nationalite": "Tunisien",
+        "dateNaissance": "1992-08-24",
+        "cin": "98765432",
+        "tel": "+21623456789",
+        "adresseOfficielle": "Avenue Habib Bourguiba, Sousse",
+        "email": "ahmed.cherif@gmail.com",
+        "profession": "Data Analyst",
+        "diplomes": [
+            {
+                "etablissement": "Institut Supérieur de Gestion de Tunis",
+                "dateObtention": "2015-07-10",
+                "mention": "Bien"
+            }
+        ],
+        "experiencesProfessionnelles": [
+            {
+                "poste": "Analyste de Données",
+                "duree": 3,
+                "entreprise": "DataWorks"
+            }
+        ],
+        "stages": [
+            {
+                "intitule": "Data Analysis Internship",
+                "duree": 1,
+                "entreprise": "Insight Analytics"
+            }
+        ]
+    },
+    {
+        "reference": "REF123",
+        "nom": "Trabelsi",
+        "prenom": "Omar",
+        "situationFamiliale": "Marié",
+        "nationalite": "Tunisien",
+        "dateNaissance": "1988-11-11",
+        "cin": "12345678",
+        "tel": "+21634567890",
+        "adresseOfficielle": "Rue de l'Indépendance, Monastir",
+        "email": "omar.trabelsi@gmail.com",
+        "profession": "Chef de Projet",
+        "diplomes": [
+            {
+                "etablissement": "École Nationale des Sciences de l'Informatique",
+                "dateObtention": "2012-06-20",
+                "mention": "Bien"
+            }
+        ],
+        "experiencesProfessionnelles": [
+            {
+                "poste": "Chef de Projet",
+                "duree": 8,
+                "entreprise": "Informatique Pro"
+            }
+        ],
+        "stages": [
+            {
+                "intitule": "Gestion de Projets",
+                "duree": 1,
+                "entreprise": "PM Solutions"
+            }
+        ]
+    },
+    {
+        "reference": "REF654",
+        "nom": "Ben Salah",
+        "prenom": "Salah",
+        "situationFamiliale": "Marié",
+        "nationalite": "Tunisien",
+        "dateNaissance": "1990-03-30",
+        "cin": "87654321",
+        "tel": "+21645678901",
+        "adresseOfficielle": "Cité Ennour, Ariana",
+        "email": "salah.ben.salah@gmail.com",
+        "profession": "Responsable RH",
+        "diplomes": [
+            {
+                "etablissement": "Université de Tunis",
+                "dateObtention": "2010-06-15",
+                "mention": "Bien"
+            }
+        ],
+        "experiencesProfessionnelles": [
+            {
+                "poste": "Responsable RH",
+                "duree": 6,
+                "entreprise": "Human Capital Ltd"
+            }
+        ],
+        "stages": [
+            {
+                "intitule": "Stage en Ressources Humaines",
+                "duree": 1,
+                "entreprise": "HR Global"
+            }
+        ]
+    },
+    {
+        "reference": "REF321",
+        "nom": "Ben Amor",
+        "prenom": "Ali",
+        "situationFamiliale": "Marié",
+        "nationalite": "Tunisien",
+        "dateNaissance": "1990-01-15",
+        "cin": "22334455",
+        "tel": "+21656789012",
+        "adresseOfficielle": "Boulevard de la République, Nabeul",
+        "email": "ali.benamor@gmail.com",
+        "profession": "Développeur Full Stack",
+        "diplomes": [
+            {
+                "etablissement": "Université de Carthage",
+                "dateObtention": "2014-06-15",
+                "mention": "Bien"
+            }
+        ],
+        "experiencesProfessionnelles": [
+            {
+                "poste": "Développeur Full Stack",
+                "duree": 3,
+                "entreprise": "Web Solutions"
+            }
+        ],
+        "stages": [
+            {
+                "intitule": "Développement Full Stack",
+                "duree": 1,
+                "entreprise": "DevTech"
+            }
+        ]
+    },
+    {
+        "reference": "REF987",
+        "nom": "Kacem",
+        "prenom": "Kacem",
+        "situationFamiliale": "Célibataire",
+        "nationalite": "Tunisien",
+        "dateNaissance": "1995-07-07",
+        "cin": "55667788",
+        "tel": "+21667890123",
+        "adresseOfficielle": "Rue des Fleurs, Sfax",
+        "email": "kacem.kacem@gmail.com",
+        "profession": "Designer UI/UX",
+        "diplomes": [
+            {
+                "etablissement": "Institut Supérieur des Beaux-Arts de Tunis",
+                "dateObtention": "2017-06-10",
+                "mention": "Très Bien"
+            }
+        ],
+        "experiencesProfessionnelles": [
+            {
+                "poste": "Designer UI/UX",
+                "duree": 4,
+                "entreprise": "Creative Labs"
+            }
+        ],
+        "stages": [
+            {
+                "intitule": "Design d'Interfaces",
+                "duree": 2,
+                "entreprise": "Art & Design Studio"
+            }
+        ]
+    }
+]

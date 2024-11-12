@@ -270,7 +270,7 @@ const HistoriqueDesConges: React.FC = () => {
           <Row gutter={16}>
             <Col xs={24}>
               <Title level={4} style={{ marginBottom: 20, color: "#214f87" }}>
-              Historique Des Conges des employers
+              Historique Des Conges des employés
               </Title>
             </Col>
 

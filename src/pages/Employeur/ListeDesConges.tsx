@@ -239,7 +239,7 @@ const ListeDesConges: React.FC = () => {
           <Row gutter={16}>
             <Col xs={24}>
               <Title level={4} style={{ marginBottom: 20, color: "#214f87" }}>
-                 Liste de Congés des employers
+                 Liste de Congés des employés
               </Title>
             </Col>
 

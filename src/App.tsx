@@ -12,6 +12,7 @@ import GestionActivite from './pages/Employeur/GestionActivite.tsx';
 import DetailPage from './pages/Employeur/EntretienDetails.tsx';
 import ListDesQuestions from './pages/Employeur/ParammetrageQuestionaire.tsx';
 import ListDesQuestionsDetails from './pages/Employeur/ParammetrageQuestionaireDetails.tsx';
+import DetailEntretienQuestionsPage from './pages/Employeur/EntretienQuestions.tsx';
 
 class App extends Component {
    
@@ -31,7 +32,7 @@ class App extends Component {
       <Route path="/activite" element={<GestionActivite/>} />
 
       <Route path="documents/gestionCV/details/:id" element={<GestionCVDetails/>} />
-      <Route path="activite/entretien/details/:id" element={<DetailPage/>} />
+      <Route path="activite/entretien/details/:id" element={<DetailEntretienQuestionsPage/>} />
       <Route path="/Parammetre" element={<ListDesQuestions/>} />
       <Route path="/Parammetre/details/:id" element={<ListDesQuestionsDetails/>} />
 
