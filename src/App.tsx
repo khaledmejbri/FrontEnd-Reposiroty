@@ -9,10 +9,10 @@ import GestionDeConge from './pages/Employeur/GestionDeConge.tsx';
 import GestionCVDetails from './pages/Employeur/GestionDeCVDetails.tsx';
 import WelcomePage from './pages/Employeur/BusinessChart.tsx';
 import GestionActivite from './pages/Employeur/GestionActivite.tsx';
-import DetailPage from './pages/Employeur/EntretienDetails.tsx';
 import ListDesQuestions from './pages/Employeur/ParammetrageQuestionaire.tsx';
 import ListDesQuestionsDetails from './pages/Employeur/ParammetrageQuestionaireDetails.tsx';
 import DetailEntretienQuestionsPage from './pages/Employeur/EntretienQuestions.tsx';
+import ListDesPersonnels from './pages/Employeur/ListDesPersonnel.tsx';
 
 class App extends Component {
    
@@ -25,8 +25,8 @@ class App extends Component {
        <Route  path='/' element={<WelcomePage />}/> 
       
    
-    
-      <Route path="/personnel" element={<MultiStepForm />} />
+      <Route path="/personnel" element={<ListDesPersonnels />} />
+      <Route path="/personnel/details/:id" element={<MultiStepForm />} />
       <Route path="/documents" element={<Documents />} />
       <Route path="/conge" element={<GestionDeConge/>} />
       <Route path="/activite" element={<GestionActivite/>} />

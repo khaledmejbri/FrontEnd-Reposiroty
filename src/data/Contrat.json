@@ -1,0 +1,35 @@
+[
+  {
+    "id_contrat": 12345,
+    "date_signature": "2023-10-01",
+    "type_contrat": "CDD",
+    "conditionsSpeciales": "Conditions spécifiques pour le contrat A",
+    "dateDebutContrat": "2023-10-15",
+    "dateFinContrat": "2024-10-15",
+    "archived": false,
+    "reference_employee": "EMP001",
+    "nom_complet": "Jean Dupont"
+  },
+  {
+    "id_contrat": 12346,
+    "date_signature": "2023-09-15",
+    "type_contrat": "CDI",
+    "conditionsSpeciales": "Conditions spécifiques pour le contrat B",
+    "dateDebutContrat": "2023-09-20",
+    "dateFinContrat": "2025-09-20",
+    "archived": false,
+    "reference_employee": "EMP002",
+    "nom_complet": "Marie Durant"
+  },
+  {
+    "id_contrat": 12347,
+    "date_signature": "2023-08-10",
+    "type_contrat": "Freelance",
+    "conditionsSpeciales": "Conditions spécifiques pour le contrat C",
+    "dateDebutContrat": "2023-08-15",
+    "dateFinContrat": "2024-08-15",
+    "archived": true,
+    "reference_employee": "EMP003",
+    "nom_complet": "Paul Martin"
+  }
+]

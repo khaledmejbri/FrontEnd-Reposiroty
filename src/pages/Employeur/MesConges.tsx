@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Table, Button, Form, Col, Row, Select, DatePicker, Modal } from "antd";
-import { AppstoreAddOutlined, ClearOutlined, DeleteOutlined, SearchOutlined } from "@ant-design/icons";
+import { Table, Button, Form, Col, Row, Select, DatePicker, Modal, InputNumber } from "antd";
+import {
+  AppstoreAddOutlined,
+  ClearOutlined,
+  DeleteOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 import templatedata from "../../data/ListConge.json";
 import moment from "moment"; // For date filtering
@@ -15,7 +20,8 @@ interface MesConge {
   soldeConge: number; // remaining leave balance
   totalDaysPerYear: number;
   daysTaken: number; // totalDaysPerYear - soldeConge
-
+  nombre_jours?:number;
+  nombre_heures?:number;
 }
 
 const MesCongs: React.FC = () => {
@@ -23,23 +29,25 @@ const MesCongs: React.FC = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newEntry, setNewEntry] = useState<MesConge>({
     id: "",
-    status: "", 
-    type: "", 
+    status: "",
+    type: "",
     startDate: "",
     endDate: "",
-    soldeConge:0,
-    totalDaysPerYear:0,
-    daysTaken:0
+    soldeConge: 0,
+    totalDaysPerYear: 0,
+    daysTaken: 0,
+    nombre_jours:0 as any,
+    nombre_heures:0 as any 
   });
   const [filters, setFilters] = useState({
     id: "",
-    status: "", 
-    type: "", 
+    status: "",
+    type: "",
     startDate: "",
     endDate: "",
-    soldeConge:0,
-    totalDaysPerYear:0,
-    daysTaken:0
+    soldeConge: 0,
+    totalDaysPerYear: 0,
+    daysTaken: 0,
   });
 
   useEffect(() => {
@@ -57,7 +65,6 @@ const MesCongs: React.FC = () => {
   };
 
   const columns = [
-  
     {
       title: "Type",
       dataIndex: "type",
@@ -83,7 +90,11 @@ const MesCongs: React.FC = () => {
           Ref: "Refusé",
           Trait: "En Cours de traiter",
         };
-        return <span style={{ color: status === "Ok" ? "green" : "red" }}>{statusLabels[status] || status}</span>;
+        return (
+          <span style={{ color: status === "Ok" ? "green" : "red" }}>
+            {statusLabels[status] || status}
+          </span>
+        );
       },
     },
     {
@@ -97,19 +108,31 @@ const MesCongs: React.FC = () => {
       key: "endDate",
     },
     {
+      title: "nombre heures",
+      dataIndex: "nombre_heures",
+      key: "nombre_heures",
+    },
+    {
+      title: "nombre jours",
+      dataIndex: "nombre_jours",
+      key: "nombre_jours",
+    },
+    {
       title: "Action",
       key: "action",
       render: (_: any, record: MesConge) => {
         if (record.status === "EnCours") {
           return (
-        <Button
-          type="primary"
-          onClick={() => handleDelete(record.id)}
-          style={{ backgroundColor: "#d96666", borderColor: "#d96666" }}
-        >
-          <DeleteOutlined /> Delete
-        </Button>)}}
-      
+            <Button
+              type="primary"
+              onClick={() => handleDelete(record.id)}
+              style={{ backgroundColor: "#d96666", borderColor: "#d96666" }}
+            >
+              <DeleteOutlined /> Delete
+            </Button>
+          );
+        }
+      },
     },
   ];
 
@@ -146,47 +169,49 @@ const MesCongs: React.FC = () => {
   const handleClearFilters = () => {
     setFilters({
       id: "",
-      status: "", 
-      type: "", 
+      status: "",
+      type: "",
       startDate: "",
       endDate: "",
-      soldeConge:0,
-      totalDaysPerYear:0,
-      daysTaken:0})
+      soldeConge: 0,
+      totalDaysPerYear: 0,
+      daysTaken: 0,
+    });
     // Optionally, reset the filtered data source to the full unfiltered list
     const dataWithKeys = templatedata.map((leave, index) => ({
       ...leave,
       key: `leave-${index}`,
-      
     }));
     setDataSource(dataWithKeys);
   };
- // Open modal to add new entry
- const showModal = () => {
-  setIsModalVisible(true);
-};
-
-// Handle form submission in the modal
-const handleAddEntry = () => {
-  const newData = {
-    ...newEntry,
-    status: 'waiting',
-    key: `leave-${dataSource.length}`, // Generate a new key
-    reference: `Ref00${(dataSource.length+1).toString()}`,
+  // Open modal to add new entry
+  const showModal = () => {
+    setIsModalVisible(true);
   };
-  setDataSource([ newData,...dataSource]); // Add new entry to data source
-  setIsModalVisible(false); // Close the modal
-  setNewEntry({
-    id: "",
-    status: "", 
-    type: "", 
-    startDate: "",
-    endDate: "",
-    soldeConge:0,
-    totalDaysPerYear:0,
-    daysTaken:0
-  }); // Reset form data
-};
+
+  // Handle form submission in the modal
+  const handleAddEntry = () => {
+    const newData = {
+      ...newEntry,
+      status: "EnCours",
+      key: `leave-${dataSource.length}`, // Generate a new key
+      reference: `Ref00${(dataSource.length + 1).toString()}`,
+    };
+    setDataSource([newData, ...dataSource]); // Add new entry to data source
+    setIsModalVisible(false); // Close the modal
+    setNewEntry({
+      id: "",
+      status: "",
+      type: "",
+      startDate: "",
+      endDate: "",
+      soldeConge: 0,
+      totalDaysPerYear: 0,
+      daysTaken: 0,
+      nombre_heures:0,
+      nombre_jours:0,
+    }); // Reset form data
+  };
   return (
     <>
       <Card>
@@ -202,21 +227,20 @@ const handleAddEntry = () => {
                 Ma Liste des Congés
               </Title>
             </Col>
-          
 
             <Col xs={12} md={4}>
               <Form.Item label="Type">
                 <Select
                   value={filters.type}
-                  onChange={(value) =>
-                    setFilters({ ...filters, type: value })
-                  }
+                  onChange={(value) => setFilters({ ...filters, type: value })}
                 >
                   <Select.Option value="">Tous</Select.Option>
                   <Select.Option value="Pay">Congé Payé</Select.Option>
                   <Select.Option value="Mald">Congé Maladie</Select.Option>
                   <Select.Option value="Matr">Congé Maternité</Select.Option>
-                  <Select.Option value="SanSold">Congé sans Solde</Select.Option>
+                  <Select.Option value="SanSold">
+                    Congé sans Solde
+                  </Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -231,23 +255,24 @@ const handleAddEntry = () => {
                 >
                   <Select.Option value="">Tous</Select.Option>
                   <Select.Option value="Ok">Accepter</Select.Option>
-                  <Select.Option value="Trait">En Cours de traiter</Select.Option>
+                  <Select.Option value="Trait">
+                    En Cours de traiter
+                  </Select.Option>
                   <Select.Option value="Ref">Refusé</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
 
- 
             <Col xs={12} md={4}>
-              <Form.Item label="De" >
+              <Form.Item label="De">
                 <DatePicker
-                required
-                style={{width:"100%"}}
+                  required
+                  style={{ width: "100%" }}
                   value={filters.startDate ? moment(filters.startDate) : null}
                   onChange={(date) =>
                     setFilters({
                       ...filters,
-                      startDate: date.format("YYYY-MM-DD") ,
+                      startDate: date.format("YYYY-MM-DD"),
                     })
                   }
                 />
@@ -255,30 +280,40 @@ const handleAddEntry = () => {
             </Col>
 
             <Col xs={12} md={4}>
-              <Form.Item label="Au" >
+              <Form.Item label="Au">
                 <DatePicker
-                required
-                style={{width:"100%"}}
-                  value={moment(filters.endDate) }
+                  required
+                  style={{ width: "100%" }}
+                  value={moment(filters.endDate)}
                   onChange={(date) =>
                     setFilters({
                       ...filters,
-                      endDate:  date.format("YYYY-MM-DD"),
+                      endDate: date.format("YYYY-MM-DD"),
                     })
                   }
                 />
               </Form.Item>
             </Col>
             <Col xs={24} md={8}>
-            <Button type="primary"  onClick={showModal} style={{backgroundColor:'#79ba8a',marginRight:20,float:'right'}}>
-            <AppstoreAddOutlined /> Add
-            </Button>
+              <Button
+                type="primary"
+                onClick={showModal}
+                style={{
+                  backgroundColor: "#79ba8a",
+                  marginRight: 20,
+                  float: "right",
+                }}
+              >
+                <AppstoreAddOutlined /> Add
+              </Button>
               <Button
                 type="primary"
                 onClick={handleSearch}
                 style={{
-                  backgroundColor: "#6195d4"
-                 ,marginRight:20,float:'right',marginLeft:20,
+                  backgroundColor: "#6195d4",
+                  marginRight: 20,
+                  float: "right",
+                  marginLeft: 20,
                 }}
               >
                 <SearchOutlined /> Recherche
@@ -287,14 +322,14 @@ const handleAddEntry = () => {
                 type="default"
                 onClick={handleClearFilters}
                 style={{
-                  backgroundColor: "orange",marginRight:20,float:'right'
+                  backgroundColor: "orange",
+                  marginRight: 20,
+                  float: "right",
                 }}
               >
                 <ClearOutlined /> Clear
               </Button>
-             
             </Col>
-           
           </Row>
         </Form>
       </Card>
@@ -304,17 +339,53 @@ const handleAddEntry = () => {
         pagination={false}
         style={{ marginTop: 20 }}
       />
-       <Modal
+      <Modal
         title="Demande d'absences"
         visible={isModalVisible}
         onOk={handleAddEntry}
         onCancel={() => setIsModalVisible(false)}
       >
         <Form layout="horizontal">
-         
+          <Form.Item label="Start Date">
+            <DatePicker
+              style={{ width: "50%" }}
+              value={newEntry.startDate ? moment(newEntry.startDate) : null}
+              onChange={(date) =>
+                setNewEntry({
+                  ...newEntry,
+                  startDate: date ? date.format("YYYY-MM-DD") : "",
+                })
+              }
+            />
+          </Form.Item>
+          <Form.Item label="End Date">
+            <DatePicker
+              style={{ width: "50%" }}
+              value={newEntry.endDate ? moment(newEntry.endDate) : null}
+              onChange={(date) =>
+                setNewEntry({
+                  ...newEntry,
+                  endDate: date ? date.format("YYYY-MM-DD") : "",
+                })
+              }
+            />
+          </Form.Item>
+          <Form.Item label="Status">
+            <Select
+              style={{ width: "53%" }}
+              value="Trait"
+              onChange={(value) => setFilters({ ...filters, status: value })}
+              disabled
+            >
+              <Select.Option value="">Tous</Select.Option>
+              <Select.Option value="Ok">Accepter</Select.Option>
+              <Select.Option value="EnCours">En Cours de traiter</Select.Option>
+              <Select.Option value="Ref">Refusé</Select.Option>
+            </Select>
+          </Form.Item>
           <Form.Item label="Type">
             <Select
-            style={{width:'50%'}}
+              style={{ width: "53%" }}
               value={newEntry.type}
               onChange={(value) => setNewEntry({ ...newEntry, type: value })}
             >
@@ -322,27 +393,16 @@ const handleAddEntry = () => {
               <Select.Option value="Mald">Congé Maladie</Select.Option>
               <Select.Option value="Matr">Congé Maternité</Select.Option>
               <Select.Option value="SanSold">Congé sans Solde</Select.Option>
+              <Select.Option value="Auto">Autorisation</Select.Option>
             </Select>
           </Form.Item>
-        
-          <Form.Item label="Start Date">
-            <DatePicker
-             style={{width:'50%'}}
-              value={newEntry.startDate ? moment(newEntry.startDate) : null}
-              onChange={(date) => 
-                setNewEntry({ ...newEntry, startDate: date ? date.format("YYYY-MM-DD") : '' })
-              }
-            />
-          </Form.Item>
-          <Form.Item label="End Date">
-            <DatePicker
-             style={{width:'50%'}}
-              value={newEntry.endDate ? moment(newEntry.endDate) : null}
-              onChange={(date) => 
-                setNewEntry({ ...newEntry, endDate: date ? date.format("YYYY-MM-DD") : '' })
-              }
-            />
-          </Form.Item>
+          {newEntry.type==="Auto"?
+         ( <Form.Item label="nombre_heures">
+          <InputNumber  style={{ width: "45%" }} onChange={(value) => setNewEntry({ ...newEntry, nombre_heures: value as any })}/>
+          </Form.Item>):
+         ( <Form.Item label="nombre_jours">
+          <InputNumber style={{ width: "45%" }} onChange={(value) => setNewEntry({ ...newEntry, nombre_jours: value as any})}/>
+          </Form.Item>)}
         </Form>
       </Modal>
     </>

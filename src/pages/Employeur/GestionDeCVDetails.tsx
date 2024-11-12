@@ -47,16 +47,46 @@ const DetailPage: React.FC = () => {
   // Find the employee data that matches the reference in the URL
   const selectedEmployee = employeData.find((employee) => employee.reference === id);
 
-  // State for employee details
-  const [details, setDetails] = useState<EmployeeDetails | null>(null);
+  // Initialize state for employee details, with empty lists for 'id' null
+  const [details, setDetails] = useState<EmployeeDetails | null>(selectedEmployee || {
+    reference: '',
+    nom: '',
+    prenom: '',
+    situationFamiliale: '',
+    nationalite: '',
+    dateNaissance: '',
+    cin: '',
+    tel: '',
+    adresseOfficielle: '',
+    email: '',
+    profession: '',
+    diplomes: [{ etablissement: '', dateObtention: '', mention: '' }], // One empty Diplome
+    experiencesProfessionnelles: [{ poste: '', duree: 0, entreprise: '' }], // One empty Experience
+    stages: [{ intitule: '', duree: 0, entreprise: '' }], // One empty Stage
+  });
 
   useEffect(() => {
-    if (selectedEmployee) {
+    if (!selectedEmployee && id !== 'null') {
+      setDetails({
+        reference: '',
+        nom: '',
+        prenom: '',
+        situationFamiliale: '',
+        nationalite: '',
+        dateNaissance: '',
+        cin: '',
+        tel: '',
+        adresseOfficielle: '',
+        email: '',
+        profession: '',
+        diplomes: [{ etablissement: '', dateObtention: '', mention: '' }],
+        experiencesProfessionnelles: [{ poste: '', duree: 0, entreprise: '' }],
+        stages: [{ intitule: '', duree: 0, entreprise: '' }],
+      });
+    } else if (selectedEmployee) {
       setDetails(selectedEmployee);
-    } else {
-      message.error('Employee data not found');
     }
-  }, [selectedEmployee]);
+  }, [id, selectedEmployee]);
 
   // Message API for displaying notifications
   const [messageApi, contextHolder] = message.useMessage();
@@ -65,6 +95,39 @@ const DetailPage: React.FC = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setDetails((prevDetails) => (prevDetails ? { ...prevDetails, [name]: value } : null));
+  };
+
+  // Add new Diplôme
+  const addDiplome = () => {
+    setDetails((prevDetails) => {
+      if (prevDetails) {
+        const updatedDiplomes = [...prevDetails.diplomes, { etablissement: '', dateObtention: '', mention: '' }];
+        return { ...prevDetails, diplomes: updatedDiplomes };
+      }
+      return prevDetails;
+    });
+  };
+
+  // Add new Experience
+  const addExperience = () => {
+    setDetails((prevDetails) => {
+      if (prevDetails) {
+        const updatedExperiences = [...prevDetails.experiencesProfessionnelles, { poste: '', duree: 0, entreprise: '' }];
+        return { ...prevDetails, experiencesProfessionnelles: updatedExperiences };
+      }
+      return prevDetails;
+    });
+  };
+
+  // Add new Stage
+  const addStage = () => {
+    setDetails((prevDetails) => {
+      if (prevDetails) {
+        const updatedStages = [...prevDetails.stages, { intitule: '', duree: 0, entreprise: '' }];
+        return { ...prevDetails, stages: updatedStages };
+      }
+      return prevDetails;
+    });
   };
 
   const handleSave = () => {
@@ -84,25 +147,31 @@ const DetailPage: React.FC = () => {
             <div style={{ backgroundColor: "#ffff", padding: 20 }}>
               <Row>
                 <Col span={22}>
-                  <h2 style={{ color: "#6195d4" }}>{`${details.reference} - ${details.nom} ${details.prenom}`}</h2>
+                  <h2 style={{ color: "#6195d4" }}>
+                    {id === 'null' ? 'Add New Employee' : `${details.reference} - ${details.nom} ${details.prenom}`}
+                  </h2>
                 </Col>
                 <Col span={2}>
-                  <Button onClick={handleSave} style={{ backgroundColor: "#79ba8a", color: "#ffff" }}>Enregistrer</Button>
+                  <Button onClick={handleSave} style={{ backgroundColor: "#79ba8a", color: "#ffff" }}>
+                    Enregistrer
+                  </Button>
                 </Col>
               </Row>
               <Row gutter={[16, 16]}>
                 {Object.keys(details).filter(key => typeof details[key as keyof EmployeeDetails] !== 'object').map((key) => (
                   <Col span={8} key={key}>
-                    <label style={{ color: "#1b5caa" }}>{key.charAt(0).toUpperCase() + key.slice(1)}:</label>
+                    <label style={{ color: "#1b5caa" }}>
+                      {key.charAt(0).toUpperCase() + key.slice(1)}:
+                    </label>
                     <Input name={key} value={details[key as keyof EmployeeDetails] as string} onChange={handleInputChange} />
                   </Col>
                 ))}
               </Row>
 
-              {/* Diplomas Section */}
+              {/* Diplômes Section */}
               <h3>Diplômes</h3>
               {details.diplomes.map((diplome, index) => (
-                <Row gutter={[16, 16]} key={index}>
+                <Row gutter={[16, 16]} key={index} style={{marginBottom:'20px'}}>
                   <Col span={8}>
                     <Input
                       placeholder="Etablissement"
@@ -139,11 +208,12 @@ const DetailPage: React.FC = () => {
                   </Col>
                 </Row>
               ))}
+              <Button onClick={addDiplome} style={{ marginTop: '10px' }}>Add New Diplome</Button>
 
               {/* Experiences Section */}
               <h3>Expériences Professionnelles</h3>
               {details.experiencesProfessionnelles.map((experience, index) => (
-                <Row gutter={[16, 16]} key={index}>
+                <Row gutter={[16, 16]} key={index} style={{marginBottom:'20px'}}>
                   <Col span={8}>
                     <Input
                       placeholder="Poste"
@@ -180,11 +250,12 @@ const DetailPage: React.FC = () => {
                   </Col>
                 </Row>
               ))}
+              <Button onClick={addExperience} style={{ marginTop: '10px' }}>Add New Experience</Button>
 
               {/* Stages Section */}
               <h3>Stages</h3>
               {details.stages.map((stage, index) => (
-                <Row gutter={[16, 16]} key={index}>
+                <Row gutter={[16, 16]} key={index} style={{marginBottom:'20px'}}>
                   <Col span={8}>
                     <Input
                       placeholder="Intitulé"
@@ -221,6 +292,7 @@ const DetailPage: React.FC = () => {
                   </Col>
                 </Row>
               ))}
+              <Button onClick={addStage} style={{ marginTop: '10px' }}>Add New Stage</Button>
             </div>
           </TabPane>
 

@@ -12,7 +12,7 @@ import {
   Space,
 } from "antd";
 import {
-  AppstoreAddOutlined,
+  
   CheckCircleOutlined,
   ClearOutlined,
   CloseCircleOutlined,
@@ -207,9 +207,7 @@ const ListeDesConges: React.FC = () => {
   };
 
   // Open modal to add new entry
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+
 
   // Handle form submission in the modal
   const handleAddEntry = () => {
@@ -292,9 +290,7 @@ const ListeDesConges: React.FC = () => {
               </Form.Item>
             </Col>
             <Col xs={24} md={8}>
-            <Button type="primary"  onClick={showModal} style={{backgroundColor:'#79ba8a',marginRight:20,float:'right'}}>
-            <AppstoreAddOutlined /> Add
-            </Button>
+            
               <Button
                 type="primary"
                 onClick={handleSearch}

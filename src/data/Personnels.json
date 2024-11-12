@@ -1,0 +1,159 @@
+[
+  {
+    "id":1,
+    "nom": "Doe",
+    "prenom": "John",
+    "situationFamiliale": "Marié",
+    "regimeSocial": "Sécurité Sociale",
+    "modeRemuneration": "Mensuel",
+    "nationalite": "Française",
+    "dateNaissance": "1980-01-01",
+    "cin": "AB123456",
+    "passeport": "P12345678",
+    "tel": "+33123456789",
+    "adresseOfficielle": "123 Rue de Paris, 75001 Paris, France",
+    "conjoint": "Jane Doe",
+    "photo": "https://example.com/photo_john.jpg",
+    "reference": "EMP123456",
+    "email": "john.doe@example.com",
+    "position": "Ingénieur",
+    "enfants": [
+      {
+        "nom": "Doe",
+        "prenom": "Marie",
+        "dateNaissance": "2010-05-15"
+      },
+      {
+        "nom": "Doe",
+        "prenom": "Lucas",
+        "dateNaissance": "2013-08-20"
+      }
+    ],
+    "etatStatutaire": {
+      "statut": "Actif",
+      "dateDebut": "2020-03-01",
+      "dateFin": null
+    },
+    "affectation": {
+      "departement": "Informatique",
+      "poste": "Développeur Senior",
+      "dateAffectation": "2021-06-01",
+      "responsable": "Jean Dupont"
+    },
+    "affectationHistory": [
+      {
+        "departement": "Informatique",
+        "poste": "Développeur",
+        "dateAffectation": "2018-05-10",
+        "responsable": "Michel Leroy"
+      },
+      {
+        "departement": "Informatique",
+        "poste": "Développeur Confirmé",
+        "dateAffectation": "2019-04-15",
+        "responsable": "Claire Moreau"
+      }
+    ]
+  },
+  {
+    "id":2,
+    "nom": "Smith",
+    "prenom": "Anna",
+    "situationFamiliale": "Célibataire",
+    "regimeSocial": "Privé",
+    "modeRemuneration": "Horaire",
+    "nationalite": "Américaine",
+    "dateNaissance": "1992-07-14",
+    "cin": "XY987654",
+    "passeport": "P98765432",
+    "tel": "+33198765432",
+    "adresseOfficielle": "45 Rue de Lyon, 75012 Paris, France",
+    "conjoint": null,
+    "photo": "https://example.com/photo_anna.jpg",
+    "reference": "EMP654321",
+    "email": "anna.smith@example.com",
+    "position": "Consultante",
+    "enfants": [],
+    "etatStatutaire": {
+      "statut": "Actif",
+      "dateDebut": "2019-01-15",
+      "dateFin": null
+    },
+    "affectation": {
+      "departement": "Conseil",
+      "poste": "Consultante Sénior",
+      "dateAffectation": "2021-09-01",
+      "responsable": "Sophie Blanc"
+    },
+    "affectationHistory": [
+      {
+        "departement": "Conseil",
+        "poste": "Consultante",
+        "dateAffectation": "2019-01-15",
+        "responsable": "Laurent Dupuis"
+      },
+      {
+        "departement": "Conseil",
+        "poste": "Consultante Confirmée",
+        "dateAffectation": "2020-06-10",
+        "responsable": "Sophie Blanc"
+      }
+    ]
+  },
+  {
+    "id":3,
+    "nom": "Lee",
+    "prenom": "Michael",
+    "situationFamiliale": "Divorcé",
+    "regimeSocial": "Mutuel",
+    "modeRemuneration": "Hebdomadaire",
+    "nationalite": "Canadienne",
+    "dateNaissance": "1985-11-30",
+    "cin": "CD456789",
+    "passeport": "P45678901",
+    "tel": "+33145678901",
+    "adresseOfficielle": "89 Avenue des Champs, 75008 Paris, France",
+    "conjoint": "Laura Lee",
+    "photo": "https://example.com/photo_michael.jpg",
+    "reference": "EMP789456",
+    "email": "michael.lee@example.com",
+    "position": "Directeur de Projet",
+    "enfants": [
+      {
+        "nom": "Lee",
+        "prenom": "Sophia",
+        "dateNaissance": "2012-03-11"
+      },
+      {
+        "nom": "Lee",
+        "prenom": "James",
+        "dateNaissance": "2015-09-21"
+      }
+    ],
+    "etatStatutaire": {
+      "statut": "Inactif",
+      "dateDebut": "2017-04-01",
+      "dateFin": "2023-04-01"
+    },
+    "affectation": {
+      "departement": "Gestion de Projet",
+      "poste": "Directeur de Projet",
+      "dateAffectation": "2020-08-01",
+      "responsable": "Christine Martin"
+    },
+    "affectationHistory": [
+      {
+        "departement": "Gestion de Projet",
+        "poste": "Chef de Projet",
+        "dateAffectation": "2017-04-01",
+        "responsable": "Eric Lambert"
+      },
+      {
+        "departement": "Gestion de Projet",
+        "poste": "Responsable de Projet",
+        "dateAffectation": "2019-03-15",
+        "responsable": "Christine Martin"
+      }
+    ]
+  }
+]
