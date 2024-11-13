@@ -88,7 +88,7 @@ const MesCongs: React.FC = () => {
         const statusLabels: { [key: string]: string } = {
           Ok: "Accepter",
           Ref: "Refusé",
-          Trait: "En Cours de traiter",
+          Trait: "En Cours",
         };
         return (
           <span style={{ color: status === "Ok" ? "green" : "red" }}>
@@ -256,7 +256,7 @@ const MesCongs: React.FC = () => {
                   <Select.Option value="">Tous</Select.Option>
                   <Select.Option value="Ok">Accepter</Select.Option>
                   <Select.Option value="Trait">
-                    En Cours de traiter
+                    En Cours
                   </Select.Option>
                   <Select.Option value="Ref">Refusé</Select.Option>
                 </Select>
@@ -379,7 +379,7 @@ const MesCongs: React.FC = () => {
             >
               <Select.Option value="">Tous</Select.Option>
               <Select.Option value="Ok">Accepter</Select.Option>
-              <Select.Option value="EnCours">En Cours de traiter</Select.Option>
+              <Select.Option value="EnCours">En Cours</Select.Option>
               <Select.Option value="Ref">Refusé</Select.Option>
             </Select>
           </Form.Item>

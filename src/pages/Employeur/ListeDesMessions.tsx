@@ -10,6 +10,7 @@ import {
   Modal,
   Input,
   Switch,
+  List,
 } from "antd";
 import {
   AppstoreAddOutlined,
@@ -21,6 +22,12 @@ import templatedata from "../../data/missionOrder.json";
 import moment from "moment";
 import Card from "antd/es/card/Card";
 
+const employeeData = [
+  { id: 1, matricule: "E001", fullname: "Mejbri khaled", position: "Developer", email: "mejbri khaled@company.com", phoneNumber: "123-456-7890" },
+  { id: 2, matricule: "E002", fullname: "Mohamed ALI", position: "Designer", email: "med@company.com", phoneNumber: "123-456-7891" },
+  { id: 3, matricule: "E003", fullname: "test test", position: "Manager", email: "test@company.com", phoneNumber: "123-456-7892" },
+];
+
 interface MissionOrderInterface {
   key: string;
   id: number;
@@ -29,13 +36,10 @@ interface MissionOrderInterface {
   type: string;
   startDate: string;
   endDate: string;
-  nom: string;
-  prenom: string;
-  accessRight: string;
-  numTel: string;
   presence: boolean;
   budget: string;
   destination: string;
+  employees?: Array<{ id: number; fullname: string; matricule: string; position: string; email: string; phoneNumber: string }>;
 }
 
 const ListeMission: React.FC = () => {
@@ -44,219 +48,124 @@ const ListeMission: React.FC = () => {
   const [newEntry, setNewEntry] = useState<MissionOrderInterface>({
     key: "",
     id: 0,
-    reference: "",
-    status: "", // Default status
-    type: "", // Default type for mission
+    reference: `Ref00${Math.floor(Math.random() * 1000)}`,
+    status: "",
+    type: "",
     startDate: "",
     endDate: "",
-    nom: "",
-    prenom: "",
-    accessRight: "", // Default access right
-    numTel: "",
     presence: false,
     budget: "",
     destination: "",
+    employees: [],
   });
-
   const [filters, setFilters] = useState({
-    reference: "",
-    type: "",
     status: "",
+    destination: "",
     startDate: "" as string | null,
     endDate: "" as string,
-    nom: "",
     presence: false,
-    budget:"",
-    destination: "",
   });
-
-  
-
-  const columns = [
-    {
-      title: "Reference",
-      dataIndex: "reference",
-      key: "reference",
-    },
-    {
-      title: "Nom",
-      dataIndex: "nom",
-      key: "nom",
-    },
-    {
-      title: "Prenom",
-      dataIndex: "prenom",
-      key: "prenom",
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
-      render: (type: string) => {
-        const typeLabels: { [key: string]: string } = {
-          Business: "Mission Business",
-          Training: "Mission Training",
-          Project: "Project Assignment",
-        };
-        return typeLabels[type] || type;
-      },
-    },
-
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (status: string) => {
-        const statusLabels: { [key: string]: string } = {
-          Ok: "Accepter",
-          Ref: "Refusé",
-          EnCours: "En Cours de traiter",
-          Nonjustifier: "En Cours de mession",
-        };
-        return (
-          <span style={{ color: status === "Nonjustifier" ? "green" : "red" }}>
-            {statusLabels[status] || status}
-          </span>
-        );
-      },
-    },
-    {
-      title: "presence",
-      dataIndex: "presence",
-      key: "presence",
-      
-        render: (presence: boolean) => (
-          <span style={{ color: presence ? "green" : "red" }}>
-            {presence ? "Yes" : "No"}
-          </span>
-        ),
-      
-    },
-    {
-      title: "Budget",
-      dataIndex: "budget",
-      key: "budget",
-    },
-    {
-      title: "Destination",
-      dataIndex: "destination",
-      key: "destination",
-    },
-    {
-      title: "Mission Start Date",
-      dataIndex: "startDate",
-      key: "startDate",
-    },
-    {
-      title: "Mission End Date",
-      dataIndex: "endDate",
-      key: "endDate",
-    },
-   
-  ];
-
-  const handleSearch = () => {
-    const filteredData = templatedata
-      .map((missionOrder) => ({
-        ...missionOrder,
-        key: missionOrder.id.toString(),
-      }))
-      .filter((missionOrder) => {
-        const matchReference =
-          !filters.reference ||
-          missionOrder.reference.includes(filters.reference);
-        const matchType = !filters.type || missionOrder.type === filters.type;
-        const matchStatus =
-          !filters.status || missionOrder.status === filters.status;
-          const matchPresence =
-          !filters.presence || missionOrder.presence=== filters.presence;
-        const matchNom = !filters.nom || missionOrder.nom === filters.nom;
-        const matchBudget =
-          !filters.budget || missionOrder.budget === filters.budget;
-
-        const matchStartDate =
-          !filters.startDate ||
-          moment(missionOrder.startDate).isSameOrAfter(
-            moment(filters.startDate)
-          );
-        const matchEndDate =
-          !filters.endDate ||
-          moment(missionOrder.endDate).isSameOrBefore(moment(filters.endDate));
-        return (
-          matchReference &&
-          matchType &&
-          matchStatus &&
-          matchStartDate &&
-          matchEndDate &&
-          matchNom &&
-          matchBudget &&
-          matchPresence
-
-        );
-      });
-    setDataSource(filteredData);
-  };
-
-  const handleClearFilters = () => {
-    setFilters({
-      reference: "",
-      type: "",
-      status: "",
-      startDate: "",
-      endDate: "",
-      nom: "",
-      presence: false,
-      budget:"",
-      destination: "",
-    });
-    setDataSource(
-      templatedata.map((missionOrder) => ({
-        ...missionOrder,
-        key: missionOrder.id.toString(),
-      }))
-    );
-  };
+  const [employeeSearch, setEmployeeSearch] = useState("");
+  const [filteredEmployees, setFilteredEmployees] = useState(employeeData);
 
   const showModal = () => {
     setIsModalVisible(true);
+    setFilteredEmployees(employeeData);
   };
 
-  const handleAddEntry = () => {
-    const newData = {
+  const handleEmployeeSearch = (searchTerm: string) => {
+    setEmployeeSearch(searchTerm);
+    setFilteredEmployees(
+      employeeData.filter((employee) =>
+        employee.fullname.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  };
+
+  const handleAddEmployee = (employee: any) => {
+    if (!newEntry.employees?.find((emp) => emp.id === employee.id)) {
+      setNewEntry({
+        ...newEntry,
+        employees: [...(newEntry.employees || []), employee],
+      });
+    }
+  };
+
+  const handleRemoveEmployee = (employeeId: number) => {
+    setNewEntry({
+      ...newEntry,
+      employees: newEntry.employees?.filter((emp) => emp.id !== employeeId),
+    });
+  };
+
+  const handleAddMission = () => {
+    const newMission = {
       ...newEntry,
       id: dataSource.length + 1,
       key: (dataSource.length + 1).toString(),
-      reference: `Ref00${(dataSource.length+1).toString()}`,
-
     };
-    setDataSource([newData, ...dataSource]);
+    setDataSource([newMission, ...dataSource]);
     setIsModalVisible(false);
     setNewEntry({
       key: "",
       id: 0,
-      reference: "",
+      reference: `Ref00${Math.floor(Math.random() * 1000)}`,
       status: "",
       type: "",
       startDate: "",
       endDate: "",
-      nom: "",
-      prenom: "",
-      accessRight: "",
-      numTel: "",
       presence: false,
       budget: "",
       destination: "",
+      employees: [],
     });
   };
-  useEffect(() => {
-    // Initialize the data source with templatedata on first render
+
+  const handleSearch = () => {
+    const filteredData = templatedata
+      .filter((mission) => {
+        const matchStatus = !filters.status || mission.status === filters.status;
+        const matchDestination = !filters.destination || mission.destination.includes(filters.destination);
+        const matchPresence = mission.presence === filters.presence;
+        const matchStartDate = !filters.startDate || moment(mission.startDate).isSameOrAfter(moment(filters.startDate));
+        const matchEndDate = !filters.endDate || moment(mission.endDate).isSameOrBefore(moment(filters.endDate));
+
+        return (
+          matchStatus &&
+          matchDestination &&
+          matchPresence &&
+          matchStartDate &&
+          matchEndDate
+        );
+      });
+    setDataSource(filteredData as any);
+  };
+
+  const handleClearFilters = () => {
+    setFilters({
+      status: "",
+      destination: "",
+      startDate: null,
+      endDate: "",
+      presence: false,
+    });
     setDataSource(
-      templatedata.map((missionOrder) => ({
-        ...missionOrder,
-        key: missionOrder.id.toString(),
+      templatedata.map((mission) => ({
+        ...mission,
+        key: mission.id.toString(),
+      }))
+    );
+  };
+
+  useEffect(() => {
+    setDataSource(
+      templatedata.map((mission) => ({
+        ...mission,
+        key: mission.id.toString(),
       }))
     );
   }, []);
+
   return (
     <>
       <Card>
@@ -267,193 +176,232 @@ const ListeMission: React.FC = () => {
                 Liste des ordres de mission
               </Title>
             </Col>
-
-            <Col xs={12} md={5}>
-              <Form.Item label="Nom">
+            <Col xs={12} md={4}>
+              <Form.Item label="Statut">
                 <Select
-                  showSearch
-                  value={filters.nom} // Ensure `filters.nom` is a string, not an object or array
-                  onChange={(value) => setFilters({ ...filters, nom: value })}
-                  placeholder="Chercher par nom"
-                  optionFilterProp="children"
-                  onSelect={(e) => {
-                    console.log({ e });
-                    setFilters({ ...filters, nom: e });
-                  }}
+                  value={filters.status}
+                  onChange={(value) => setFilters({ ...filters, status: value })}
                 >
-                  {dataSource.map((item) => (
-                    <Select.Option
-                      key={item.id}
-                      value={item.nom}
-                      onSelect={(e: any) => {
-                        console.log({ e });
-                        setFilters({ ...filters, nom: e });
-                      }}
-                    >
-                      {" "}
-                      {/* Ensure value is a string */}
-                      {item.nom}
-                    </Select.Option>
-                  ))}
+                  <Select.Option value="">Tous</Select.Option>
+                  <Select.Option value="Pending">En attente</Select.Option>
+                  <Select.Option value="Approved">Approuvé</Select.Option>
+                  <Select.Option value="Rejected">Rejeté</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
-            <Col xs={12} md={5}>
-              <Form.Item label="Type">
-                <Select
-                  value={filters.type}
-                  onChange={(value) => setFilters({ ...filters, type: value })}
-                >
-                  <Select.Option value="">Tous</Select.Option>
-                  <Select.Option value="Business">Business</Select.Option>
-                  <Select.Option value="Training">Training</Select.Option>
-                  <Select.Option value="Project">Project</Select.Option>
-                </Select>
+            <Col xs={12} md={4}>
+              <Form.Item label="Destination">
+                <Input
+                  value={filters.destination}
+                  onChange={(e) =>
+                    setFilters({ ...filters, destination: e.target.value })
+                  }
+                />
               </Form.Item>
             </Col>
             <Col xs={12} md={2}>
-              <Form.Item label="presence">
-              <Switch size="small" checked={filters.presence}
+              <Form.Item label="Présence">
+                <Switch
+                  checked={filters.presence}
                   onChange={(checked) =>
                     setFilters({ ...filters, presence: checked })
-                  }/>
+                  }
+                />
               </Form.Item>
             </Col>
-            
-            <Col xs={24} md={8}>
-            <Button type="primary"  onClick={showModal} style={{backgroundColor:'#79ba8a',marginRight:20,float:'right'}}>
-            <AppstoreAddOutlined /> Ajouter
-            </Button>
-              <Button
-                type="primary"
-                onClick={handleSearch}
-                style={{
-                  backgroundColor: "#6195d4"
-                 ,marginRight:20,float:'right',marginLeft:20,
-                }}
-              >
-                <SearchOutlined /> Recherche
-              </Button>
-              <Button
-                type="default"
-                onClick={handleClearFilters}
-                style={{
-                  backgroundColor: "orange",marginRight:20,float:'right'
-                }}
-              >
-                <ClearOutlined /> Clear
-              </Button>
-             
-            
-            </Col>
-           
-            <Col xs={12} md={5}>
+            <Col xs={12} md={4}>
               <Form.Item label="Date début">
                 <DatePicker
                   style={{ width: "100%" }}
                   value={filters.startDate ? moment(filters.startDate) : null}
+                  onChange={(date) =>
+                    setFilters({ ...filters, startDate: date?.toISOString() || null })
+                  }
                 />
               </Form.Item>
             </Col>
-            <Col xs={12} md={5}>
+            <Col xs={12} md={4}>
               <Form.Item label="Date fin">
                 <DatePicker
                   style={{ width: "100%" }}
                   value={filters.endDate ? moment(filters.endDate) : null}
+                  onChange={(date) =>
+                    setFilters({ ...filters, endDate: date?.toISOString() || "" })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={24} md={6}>
+              <Button type="primary" onClick={handleSearch} style={{ backgroundColor: "#6195d4", marginRight: 8 }}>
+                <SearchOutlined /> Rechercher
+              </Button>
+              <Button type="default" onClick={handleClearFilters} style={{ backgroundColor: "orange" }}>
+                <ClearOutlined /> Réinitialiser
+              </Button>
+              <Button
+                type="primary"
+                onClick={showModal}
+                style={{ backgroundColor: "#79ba8a", marginLeft: 8 }}
+              >
+                <AppstoreAddOutlined /> Ajouter une Mission
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Card>
+
+      <Table
+        dataSource={dataSource}
+        columns={[
+          { title: "Référence", dataIndex: "reference", key: "reference" },
+          { title: "Statut", dataIndex: "status", key: "status" },
+          { title: "Présence", dataIndex: "true", key: "true" ,
+            render: (Presence: boolean) => {
+              const PrésenceLabels: { [key: string]: string } = {
+                true: "Presentiel",
+                false: "A distance",
+              };
+              return (
+                <span style={{ color: Presence ? "green" : "red" }}>
+                 { Presence}
+                </span>
+              );
+          },},
+          { title: "Budget", dataIndex: "budget", key: "budget" },
+          { title: "Destination", dataIndex: "destination", key: "destination" },
+          { title: "Date de début", dataIndex: "startDate", key: "startDate" },
+          { title: "Date de fin", dataIndex: "endDate", key: "endDate" },
+        ]}
+        pagination={{ pageSize: 5 }}
+      />
+
+      <Modal
+        title="Ajouter une nouvelle mission"
+        visible={isModalVisible}
+        onOk={handleAddMission}
+        onCancel={() => setIsModalVisible(false)}
+        okText="Ajouter"
+        cancelText="Annuler"
+        width={800}
+      >
+        <Form layout="vertical">
+          <Row gutter={16}>
+            <Col span={12}>
+              <Form.Item label="Référence">
+                <Input value={newEntry.reference} disabled />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Destination">
+                <Input
+                  value={newEntry.destination}
+                  onChange={(e) =>
+                    setNewEntry({ ...newEntry, destination: e.target.value })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Budget">
+                <Input
+                  value={newEntry.budget}
+                  onChange={(e) =>
+                    setNewEntry({ ...newEntry, budget: e.target.value })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Présence">
+                <Switch
+                  checked={newEntry.presence}
+                  onChange={(checked) =>
+                    setNewEntry({ ...newEntry, presence: checked })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Date de début de mission">
+                <DatePicker
+                  style={{ width: "100%" }}
+                  value={
+                    newEntry.startDate ? moment(newEntry.startDate) : null
+                  }
+                  onChange={(date) =>
+                    setNewEntry({
+                      ...newEntry,
+                      startDate: date ? date.toISOString() : "",
+                    })
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="Date de fin de mission">
+                <DatePicker
+                  style={{ width: "100%" }}
+                  value={newEntry.endDate ? moment(newEntry.endDate) : null}
+                  onChange={(date) =>
+                    setNewEntry({
+                      ...newEntry,
+                      endDate: date ? date.toISOString() : "",
+                    })
+                  }
                 />
               </Form.Item>
             </Col>
           </Row>
+
+          <Form.Item label="Chercher Employés">
+            <Input
+              placeholder="Rechercher par nom"
+              value={employeeSearch}
+              onChange={(e) => handleEmployeeSearch(e.target.value)}
+            />
+          </Form.Item>
+          <List
+            bordered
+            dataSource={filteredEmployees}
+            renderItem={(employee) => (
+              <List.Item
+                actions={[
+                  <Button
+                    type="link"
+                    onClick={() => handleAddEmployee(employee)}
+                  >
+                    Ajouter
+                  </Button>,
+                ]}
+              >
+                {employee.fullname} - {employee.position}
+              </List.Item>
+            )}
+          />
+
+          <Form.Item label="Employés assignés">
+            <List
+              bordered
+              dataSource={newEntry.employees}
+              renderItem={(employee) => (
+                <List.Item
+                  actions={[
+                    <Button
+                      type="link"
+                      danger
+                      onClick={() => handleRemoveEmployee(employee.id)}
+                    >
+                      Retirer
+                    </Button>,
+                  ]}
+                >
+                  {employee.fullname} - {employee.position}
+                </List.Item>
+              )}
+            />
+          </Form.Item>
         </Form>
-
-        <Table
-          dataSource={dataSource}
-          columns={columns}
-          pagination={{ pageSize: 5 }}
-        />
-
-        <Modal
-          title="Ajouter un nouvel ordre de mission"
-          visible={isModalVisible}
-          onOk={handleAddEntry}
-          onCancel={() => setIsModalVisible(false)}
-        >
-          <Form layout="vertical">
-            <Form.Item label="Référence">
-              <Input
-                value={newEntry.reference}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, reference: e.target.value })
-                }
-              />
-            </Form.Item>
-            <Form.Item label="Nom">
-              <Input
-                value={newEntry.nom}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, nom: e.target.value })
-                }
-              />
-            </Form.Item>
-            <Form.Item label="Prénom">
-              <Input
-                value={newEntry.prenom}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, prenom: e.target.value })
-                }
-              />
-            </Form.Item>
-            <Form.Item label="Numéro de Téléphone">
-              <Input
-                value={newEntry.numTel}
-                onChange={(e) =>
-                  setNewEntry({ ...newEntry, numTel: e.target.value })
-                }
-              />
-            </Form.Item>
-            <Form.Item label="Type de mission">
-              <Select
-                value={newEntry.type}
-                onChange={(value) => setNewEntry({ ...newEntry, type: value })}
-              >
-                <Select.Option value="Business">Business</Select.Option>
-                <Select.Option value="Training">Training</Select.Option>
-                <Select.Option value="Project">Project</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="Statut">
-              <Select
-                value={newEntry.status}
-                onChange={(value) =>
-                  setNewEntry({ ...newEntry, status: value })
-                }
-              >
-                <Select.Option value="Pending">Pending</Select.Option>
-                <Select.Option value="Approved">Approved</Select.Option>
-                <Select.Option value="Rejected">Rejected</Select.Option>
-              </Select>
-            </Form.Item>
-            <Form.Item label="Date de début de mission">
-              <DatePicker
-                style={{ width: "100%" }}
-                value={newEntry.startDate ? moment(newEntry.startDate) : null}
-                onChange={(date) =>
-                  setNewEntry({ ...newEntry, startDate: date.toString() })
-                }
-              />
-            </Form.Item>
-            <Form.Item label="Date de fin de mission">
-              <DatePicker
-                style={{ width: "100%" }}
-                value={newEntry.endDate ? moment(newEntry.endDate) : null}
-                onChange={(date) =>
-                  setNewEntry({ ...newEntry, endDate: date.toString() })
-                }
-              />
-            </Form.Item>
-          </Form>
-        </Modal>
-      </Card>
+      </Modal>
     </>
   );
 };

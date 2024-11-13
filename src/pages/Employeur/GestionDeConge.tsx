@@ -49,9 +49,7 @@ const Conge: React.FC = () => {
         <TabPane tab="Mes congés" key={7} >
         <MesCongs/>
         </TabPane>
-        <TabPane tab="Order De Mission" key={8} >
-        <ListeMession/>
-        </TabPane>
+       
       </Tabs>
       
         

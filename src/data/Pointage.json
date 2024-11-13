@@ -1,7 +1,7 @@
 [
     {
         "employeeId": 1,
-        "name": "Alice Johnson",
+        "name": "Khaled Mejbri",
         "date": "2024-09-15",
         "checkInTime": "08:15",
         "checkOutTime": "17:45",
@@ -18,7 +18,7 @@
     },
     {
         "employeeId": 2,
-        "name": "Bob Smith",
+        "name": "Ali salah",
         "date": "2024-10-01",
         "checkInTime": "09:00",
         "checkOutTime": "17:00",

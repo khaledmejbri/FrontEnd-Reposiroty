@@ -130,7 +130,7 @@ const HistoriqueDesConges: React.FC = () => {
         const statusLabels: { [key: string]: string } = {
           Ok: "Accepter",
           Ref: "Refusé",
-          EnCours: "En Cours de traiter",
+          EnCours: "En Cours",
           Nonjustifier: "Non justifier",
         };
         return (
@@ -316,7 +316,7 @@ const HistoriqueDesConges: React.FC = () => {
                   <Select.Option value="">Tous</Select.Option>
                   <Select.Option value="Ok">Accepter</Select.Option>
                   <Select.Option value="EnCours">
-                    En Cours de traiter
+                    En Cours
                   </Select.Option>
                   <Select.Option value="Ref">Refusé</Select.Option>
                 </Select>
@@ -450,7 +450,7 @@ const HistoriqueDesConges: React.FC = () => {
               >
                 <Select.Option value="Ok">Accepter</Select.Option>
                 <Select.Option value="EnCours">
-                  En Cours de traiter
+                  En Cours
                 </Select.Option>
                 <Select.Option value="Ref">Refusé</Select.Option>
                 <Select.Option value="Nonjustifier">
