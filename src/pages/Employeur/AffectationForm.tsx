@@ -9,7 +9,7 @@ interface AffectationFormProps {
     affectation?: {
       departement?: string;
       numeroAffaire?: string;
-      dateAffectation?: Moment; // Use Moment type for DatePicker
+      dateAffectation?: string; // Use Moment type for DatePicker
     };
   };
 }
@@ -18,7 +18,7 @@ interface AffectationFormProps {
 interface AffectationValues {
   departement?: string;
   numeroAffaire?: string;
-  dateAffectation?: Moment;
+  dateAffectation?: string;
 }
 
 const AffectationForm: React.FC<AffectationFormProps> = ({ setFormData, formData }) => {
@@ -59,13 +59,13 @@ const AffectationForm: React.FC<AffectationFormProps> = ({ setFormData, formData
       >
         <Input />
       </Form.Item>
-      <Form.Item style={{ width: "70%",marginLeft:"600px" }}
+      {/* <Form.Item style={{ width: "70%",marginLeft:"600px" }}
         label="Date d'Affectation"
         name="dateAffectation"
         rules={[{ required: true, message: "Veuillez sélectionner une date d'affectation" }]}
       >
         <DatePicker style={{ width: "35%" }} />
-      </Form.Item>
+      </Form.Item> */}
     </Form>
   );
 };

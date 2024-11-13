@@ -1,19 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Steps, Button, message } from 'antd';
 import AffectationForm from './AffectationForm';
 import EtatStatutaireForm from './EtatStatutaireForm';
 import GeneralData from './GeneralData';
+import { useParams } from 'react-router-dom';
+import Personnels from "../../data/Personnels.json";
+
 
 const { Step } = Steps;
 
 const MultiStepForm = () => {
+  const { id } = useParams<{ id: string }>(); // Get ID from URL
+  const isNew = id === 'new';
   const [current, setCurrent] = useState(0);
   const [formData, setFormData] = useState({
     generalData: {},
     etatStatutaire: {},
     affectation: {},
   });
-
+  useEffect(() => {
+    if (!isNew) {
+      const existingData = Personnels.find((personnel:any) => personnel.id === parseInt(id || ""));
+      if (existingData) {
+        setFormData({
+          generalData: existingData,
+          etatStatutaire: existingData.etatStatutaire,
+          affectation: existingData.affectation,
+        });
+      }
+    }
+  }, [id, isNew]);
   const steps = [
     {
       title: 'Données Générales',

@@ -13,6 +13,7 @@
         "presence": true,
         "budget": "5000",
         "destination": "Paris"
+        
     },
     {
         "id": 2,

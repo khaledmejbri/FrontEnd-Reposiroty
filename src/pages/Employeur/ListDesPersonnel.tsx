@@ -88,12 +88,12 @@ const ListDesPersonnels: React.FC = () => {
       ...personnel,
     }));
     setDataSource(validatedData);
-  }, []);
+  }, [newEntry]);
 
   const columns = [
     { title: "ID", dataIndex: "id", key: "id" },
     { title: "Nom", dataIndex: "nom", key: "nom" ,
-       render: (text: string, record: ListDesPersonnelsInterface) => (
+    render: (text: string, record: ListDesPersonnelsInterface) => (
       <Link to={`/personnel/details/${record.id}`}>{text}</Link>
     ),},
     { title: "Prenom", dataIndex: "prenom", key: "prenom" },
@@ -218,7 +218,7 @@ const ListDesPersonnels: React.FC = () => {
               </Button>
               <Button
                 type="default"
-                onClick={() => navigate(`personnel/details/${null}`)}
+                onClick={() => navigate("/personnel/details/new")}
                  style={{ backgroundColor: "orange", marginRight: 20, float: 'right' }}
               >
                 <ClearOutlined /> Ajouter

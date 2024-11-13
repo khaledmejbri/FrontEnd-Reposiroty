@@ -21,11 +21,33 @@ import Title from "antd/es/typography/Title";
 import templatedata from "../../data/missionOrder.json";
 import moment from "moment";
 import Card from "antd/es/card/Card";
+import NewModal from "./NewModal";
 
 const employeeData = [
-  { id: 1, matricule: "E001", fullname: "Mejbri khaled", position: "Developer", email: "mejbri khaled@company.com", phoneNumber: "123-456-7890" },
-  { id: 2, matricule: "E002", fullname: "Mohamed ALI", position: "Designer", email: "med@company.com", phoneNumber: "123-456-7891" },
-  { id: 3, matricule: "E003", fullname: "test test", position: "Manager", email: "test@company.com", phoneNumber: "123-456-7892" },
+  {
+    id: 1,
+    matricule: "E001",
+    fullname: "Mejbri khaled",
+    position: "Developer",
+    email: "mejbri khaled@company.com",
+    phoneNumber: "123-456-7890",
+  },
+  {
+    id: 2,
+    matricule: "E002",
+    fullname: "Mohamed ALI",
+    position: "Designer",
+    email: "med@company.com",
+    phoneNumber: "123-456-7891",
+  },
+  {
+    id: 3,
+    matricule: "E003",
+    fullname: "Foulen ben Foulen ",
+    position: "Manager",
+    email: "test@company.com",
+    phoneNumber: "123-456-7892",
+  },
 ];
 
 interface MissionOrderInterface {
@@ -39,12 +61,21 @@ interface MissionOrderInterface {
   presence: boolean;
   budget: string;
   destination: string;
-  employees?: Array<{ id: number; fullname: string; matricule: string; position: string; email: string; phoneNumber: string }>;
+  employees?: Array<{
+    id: number;
+    fullname: string;
+    matricule: string;
+    position: string;
+    email: string;
+    phoneNumber: string;
+  }>;
 }
 
 const ListeMission: React.FC = () => {
   const [dataSource, setDataSource] = useState<MissionOrderInterface[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalDetailVisible, setIsModalDetailVisible] = useState(false);
+
   const [newEntry, setNewEntry] = useState<MissionOrderInterface>({
     key: "",
     id: 0,
@@ -67,12 +98,17 @@ const ListeMission: React.FC = () => {
   });
   const [employeeSearch, setEmployeeSearch] = useState("");
   const [filteredEmployees, setFilteredEmployees] = useState(employeeData);
+  const [selectedMission, setSelectedMission] =
+    useState<MissionOrderInterface | null>(null); // State for the selected mission
 
   const showModal = () => {
     setIsModalVisible(true);
     setFilteredEmployees(employeeData);
   };
-
+  const showModalDetail = (mission: MissionOrderInterface) => {
+    setSelectedMission(mission); // Set selected mission
+    setIsModalDetailVisible(true);
+  };
   const handleEmployeeSearch = (searchTerm: string) => {
     setEmployeeSearch(searchTerm);
     setFilteredEmployees(
@@ -122,22 +158,27 @@ const ListeMission: React.FC = () => {
   };
 
   const handleSearch = () => {
-    const filteredData = templatedata
-      .filter((mission) => {
-        const matchStatus = !filters.status || mission.status === filters.status;
-        const matchDestination = !filters.destination || mission.destination.includes(filters.destination);
-        const matchPresence = mission.presence === filters.presence;
-        const matchStartDate = !filters.startDate || moment(mission.startDate).isSameOrAfter(moment(filters.startDate));
-        const matchEndDate = !filters.endDate || moment(mission.endDate).isSameOrBefore(moment(filters.endDate));
+    const filteredData = templatedata.filter((mission) => {
+      const matchStatus = !filters.status || mission.status === filters.status;
+      const matchDestination =
+        !filters.destination ||
+        mission.destination.includes(filters.destination);
+      const matchPresence = mission.presence === filters.presence;
+      const matchStartDate =
+        !filters.startDate ||
+        moment(mission.startDate).isSameOrAfter(moment(filters.startDate));
+      const matchEndDate =
+        !filters.endDate ||
+        moment(mission.endDate).isSameOrBefore(moment(filters.endDate));
 
-        return (
-          matchStatus &&
-          matchDestination &&
-          matchPresence &&
-          matchStartDate &&
-          matchEndDate
-        );
-      });
+      return (
+        matchStatus &&
+        matchDestination &&
+        matchPresence &&
+        matchStartDate &&
+        matchEndDate
+      );
+    });
     setDataSource(filteredData as any);
   };
 
@@ -150,22 +191,41 @@ const ListeMission: React.FC = () => {
       presence: false,
     });
     setDataSource(
-      templatedata.map((mission) => ({
+      templatedata.map((mission: any) => ({
         ...mission,
         key: mission.id.toString(),
+        employees: mission.employees
+          ? {
+              ...mission.employees,
+              key: mission.employees.id.toString(), // Add a unique key for the employee
+            }
+          : null, // Ensure the employees object is handled correctly if missing
       }))
     );
   };
 
   useEffect(() => {
     setDataSource(
-      templatedata.map((mission) => ({
+      templatedata.map((mission: any) => ({
         ...mission,
         key: mission.id.toString(),
+        employees: mission.employees
+          ? {
+              ...mission.employees,
+              key: mission.employees.id.toString(), // Add a unique key for the employee
+            }
+          : null, // Ensure the employees object is handled correctly if missing
       }))
     );
   }, []);
+  const [isModalVisibleNew, setIsModalVisibleNew] = useState(false);
 
+  const showModalNew = () => setIsModalVisibleNew(true);
+  const hideModalNew = () => setIsModalVisibleNew(false);
+  const handleConfirm = () => {
+    // Add confirmation logic here
+    hideModalNew();
+  };
   return (
     <>
       <Card>
@@ -180,7 +240,9 @@ const ListeMission: React.FC = () => {
               <Form.Item label="Statut">
                 <Select
                   value={filters.status}
-                  onChange={(value) => setFilters({ ...filters, status: value })}
+                  onChange={(value) =>
+                    setFilters({ ...filters, status: value })
+                  }
                 >
                   <Select.Option value="">Tous</Select.Option>
                   <Select.Option value="Pending">En attente</Select.Option>
@@ -209,13 +271,45 @@ const ListeMission: React.FC = () => {
                 />
               </Form.Item>
             </Col>
+         <Col span={2}/>
+            <Col xs={24} md={12}>
+
+              <Button
+                type="primary"
+                onClick={handleSearch}
+                style={{ backgroundColor: "#6195d4", marginRight: 8 }}
+              >
+                <SearchOutlined /> Rechercher
+              </Button>
+              <Button
+                type="default"
+                onClick={handleClearFilters}
+                style={{ backgroundColor: "orange" }}
+              >
+                <ClearOutlined /> Réinitialiser
+              </Button>
+              <Button
+                type="primary"
+                onClick={showModal}
+                style={{ backgroundColor: "#79ba8a", marginLeft: 8 }}
+              >
+                <AppstoreAddOutlined /> Ajouter une Mission
+              </Button>
+              <Button type="primary" onClick={showModalNew} style={{ backgroundColor: "#6195d4", marginLeft: 8 }}
+              >
+                Calculer budget
+              </Button>
+            </Col>
             <Col xs={12} md={4}>
               <Form.Item label="Date début">
                 <DatePicker
                   style={{ width: "100%" }}
                   value={filters.startDate ? moment(filters.startDate) : null}
                   onChange={(date) =>
-                    setFilters({ ...filters, startDate: date?.toISOString() || null })
+                    setFilters({
+                      ...filters,
+                      startDate: date?.toISOString() || null,
+                    })
                   }
                 />
               </Form.Item>
@@ -226,25 +320,13 @@ const ListeMission: React.FC = () => {
                   style={{ width: "100%" }}
                   value={filters.endDate ? moment(filters.endDate) : null}
                   onChange={(date) =>
-                    setFilters({ ...filters, endDate: date?.toISOString() || "" })
+                    setFilters({
+                      ...filters,
+                      endDate: date?.toISOString() || "",
+                    })
                   }
                 />
               </Form.Item>
-            </Col>
-            <Col xs={24} md={6}>
-              <Button type="primary" onClick={handleSearch} style={{ backgroundColor: "#6195d4", marginRight: 8 }}>
-                <SearchOutlined /> Rechercher
-              </Button>
-              <Button type="default" onClick={handleClearFilters} style={{ backgroundColor: "orange" }}>
-                <ClearOutlined /> Réinitialiser
-              </Button>
-              <Button
-                type="primary"
-                onClick={showModal}
-                style={{ backgroundColor: "#79ba8a", marginLeft: 8 }}
-              >
-                <AppstoreAddOutlined /> Ajouter une Mission
-              </Button>
             </Col>
           </Row>
         </Form>
@@ -253,27 +335,114 @@ const ListeMission: React.FC = () => {
       <Table
         dataSource={dataSource}
         columns={[
-          { title: "Référence", dataIndex: "reference", key: "reference" },
+          {
+            title: "Référence",
+            dataIndex: "reference",
+            key: "reference",
+            render: (reference: string, mission: MissionOrderInterface) => (
+              <a onClick={() => showModalDetail(mission)}>{reference}</a>
+            ),
+          },
           { title: "Statut", dataIndex: "status", key: "status" },
-          { title: "Présence", dataIndex: "true", key: "true" ,
-            render: (Presence: boolean) => {
-              const PrésenceLabels: { [key: string]: string } = {
-                true: "Presentiel",
-                false: "A distance",
-              };
+          {
+            title: "presence",
+            dataIndex: "presence",
+            key: "presence",
+            render: (presence: boolean) => {
               return (
-                <span style={{ color: Presence ? "green" : "red" }}>
-                 { Presence}
+                <span
+                  style={
+                    presence === false ? { color: "green" } : { color: "red" }
+                  }
+                >
+                  {presence === false ? "Presentiel" : "A distance"}
                 </span>
               );
-          },},
+            },
+          },
           { title: "Budget", dataIndex: "budget", key: "budget" },
-          { title: "Destination", dataIndex: "destination", key: "destination" },
+          {
+            title: "Destination",
+            dataIndex: "destination",
+            key: "destination",
+          },
           { title: "Date de début", dataIndex: "startDate", key: "startDate" },
           { title: "Date de fin", dataIndex: "endDate", key: "endDate" },
         ]}
         pagination={{ pageSize: 5 }}
       />
+      <Modal
+        title="Détails de la mission"
+        visible={isModalDetailVisible}
+        onOk={() => setIsModalDetailVisible(false)}
+        onCancel={() => setIsModalDetailVisible(false)}
+        width={800}
+      >
+        {selectedMission && (
+          <>
+            <Row gutter={16}>
+              <Col span={12}>
+                <p>
+                  <strong>Référence:</strong> {selectedMission.reference}
+                </p>
+              </Col>
+              <Col span={12}>
+                <p>
+                  <strong>Statut:</strong> {selectedMission.status}
+                </p>
+              </Col>
+              <Col span={12}>
+                <p>
+                  <strong>Type de mission:</strong> {selectedMission.type}
+                </p>
+              </Col>
+              <Col span={12}>
+                <p>
+                  <strong>Budget:</strong> {selectedMission.budget}
+                </p>
+              </Col>
+              <Col span={12}>
+                <p>
+                  <strong>Destination:</strong> {selectedMission.destination}
+                </p>
+              </Col>
+              <Col span={12}>
+                <p>
+                  <strong>Date de début:</strong>{" "}
+                  {selectedMission.startDate
+                    ? moment(selectedMission.startDate).format("DD/MM/YYYY")
+                    : ""}
+                </p>
+              </Col>
+              <Col span={12}>
+                <p>
+                  <strong>Date de fin:</strong>{" "}
+                  {selectedMission.endDate
+                    ? moment(selectedMission.endDate).format("DD/MM/YYYY")
+                    : ""}
+                </p>
+              </Col>
+              <Col span={12}>
+                <p>
+                  <strong>Présence:</strong>{" "}
+                  {selectedMission.presence ? "À distance" : "Présentiel"}
+                </p>
+              </Col>
+            </Row>
+
+            <h3>Employés assignés:</h3>
+            <List
+              bordered
+              dataSource={employeeData}
+              renderItem={(employee) => (
+                <List.Item>
+                  {employee.fullname} - {employee.position}
+                </List.Item>
+              )}
+            />
+          </>
+        )}
+      </Modal>
 
       <Modal
         title="Ajouter une nouvelle mission"
@@ -325,9 +494,7 @@ const ListeMission: React.FC = () => {
               <Form.Item label="Date de début de mission">
                 <DatePicker
                   style={{ width: "100%" }}
-                  value={
-                    newEntry.startDate ? moment(newEntry.startDate) : null
-                  }
+                  value={newEntry.startDate ? moment(newEntry.startDate) : null}
                   onChange={(date) =>
                     setNewEntry({
                       ...newEntry,
@@ -402,6 +569,14 @@ const ListeMission: React.FC = () => {
           </Form.Item>
         </Form>
       </Modal>
+
+      <NewModal
+        isVisible={isModalVisibleNew}
+        onClose={hideModalNew}
+        onConfirm={handleConfirm}
+        title="Custom Modal Title"
+        content={<div>Custom content goes here.</div>}
+      />
     </>
   );
 };
