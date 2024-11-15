@@ -15,6 +15,8 @@ import {
 import {
   AppstoreAddOutlined,
   ClearOutlined,
+  DeleteOutlined,
+  PlusOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
@@ -49,6 +51,14 @@ const employeeData = [
     phoneNumber: "123-456-7892",
   },
 ];
+interface budgetData {
+  
+    id: number,
+    nom: string,
+    budget:string
+
+ 
+};
 
 interface MissionOrderInterface {
   key: string;
@@ -59,7 +69,7 @@ interface MissionOrderInterface {
   startDate: string;
   endDate: string;
   presence: boolean;
-  budget: string;
+  budgetList?:budgetData[]
   destination: string;
   employees?: Array<{
     id: number;
@@ -85,7 +95,7 @@ const ListeMission: React.FC = () => {
     startDate: "",
     endDate: "",
     presence: false,
-    budget: "",
+    budgetList: [{ id: 0, nom: "",budget:"" }],
     destination: "",
     employees: [],
   });
@@ -151,7 +161,7 @@ const ListeMission: React.FC = () => {
       startDate: "",
       endDate: "",
       presence: false,
-      budget: "",
+      budgetList: [],
       destination: "",
       employees: [],
     });
@@ -225,6 +235,21 @@ const ListeMission: React.FC = () => {
   const handleConfirm = () => {
     // Add confirmation logic here
     hideModalNew();
+  };
+  const handleBudgetChange = (index: number, field: keyof budgetData, value: string) => {
+    const updatedBudgetList = [...(newEntry.budgetList || [])];
+    updatedBudgetList[index] = { ...updatedBudgetList[index], [field]: value };
+    setNewEntry({ ...newEntry, budgetList: updatedBudgetList });
+  };
+  
+  const handleAddBudget = () => {
+    const newBudget = { id: (newEntry.budgetList?.length || 0) + 1, nom: "", budget: "" };
+    setNewEntry({ ...newEntry, budgetList: [...(newEntry.budgetList || []), newBudget] });
+  };
+  
+  const handleRemoveBudget = (index: number) => {
+    const updatedBudgetList = newEntry.budgetList?.filter((_, i) => i !== index) || [];
+    setNewEntry({ ...newEntry, budgetList: updatedBudgetList });
   };
   return (
     <>
@@ -397,9 +422,28 @@ const ListeMission: React.FC = () => {
                 </p>
               </Col>
               <Col span={12}>
-                <p>
-                  <strong>Budget:</strong> {selectedMission.budget}
-                </p>
+               
+              <Form.Item label="Budget List">
+  {newEntry.budgetList?.map((item, index) => (
+    <div key={item.id} style={{ display: "flex", marginBottom: 8 }}>
+      <Input
+        placeholder="Nom"
+        value={item.nom}
+        onChange={(e) => handleBudgetChange(index, "nom", e.target.value)}
+        style={{ marginRight: 8 }}
+      />
+      <Input
+        placeholder="Budget"
+        value={item.budget}
+        onChange={(e) => handleBudgetChange(index, "budget", e.target.value)}
+        style={{ marginRight: 8 }}
+      />
+     
+    </div>
+  ))}
+ 
+</Form.Item>
+
               </Col>
               <Col span={12}>
                 <p>
@@ -471,14 +515,39 @@ const ListeMission: React.FC = () => {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Budget">
-                <Input
-                  value={newEntry.budget}
-                  onChange={(e) =>
-                    setNewEntry({ ...newEntry, budget: e.target.value })
-                  }
-                />
-              </Form.Item>
+            <Form.Item label="Budget List">
+  {newEntry.budgetList?.map((item, index) => (
+    <div key={item.id} style={{ display: "flex", marginBottom: 8 }}>
+      <Input
+        placeholder="Nom"
+        value={item.nom}
+        onChange={(e) => handleBudgetChange(index, "nom", e.target.value)}
+        style={{ marginRight: 8 }}
+      />
+      <Input
+        placeholder="Budget"
+        value={item.budget}
+        onChange={(e) => handleBudgetChange(index, "budget", e.target.value)}
+        style={{ marginRight: 8 }}
+      />
+      <Button
+        type="default"
+        onClick={() => handleRemoveBudget(index)}
+        icon={<DeleteOutlined />}
+        danger
+      />
+    </div>
+  ))}
+  <Button
+    type="dashed"
+    onClick={handleAddBudget}
+    style={{ width: "100%", marginTop: 8 }}
+    icon={<PlusOutlined />}
+  >
+    Add Budget
+  </Button>
+</Form.Item>
+
             </Col>
             <Col span={12}>
               <Form.Item label="Présence">

@@ -274,7 +274,7 @@ const TeamBuilding: React.FC = () => {
         <Table dataSource={dataSource} columns={columns} />
 
         <Modal
-          title="Ajouter une nouvelle mission"
+          title="Ajouter une nouvelle Entretien"
           visible={isModalVisible}
           onOk={handleAddEntry}
           onCancel={() => setIsModalVisible(false)}
